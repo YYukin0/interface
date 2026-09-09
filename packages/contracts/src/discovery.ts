@@ -38,9 +38,10 @@ import { capability, riskClass } from './capability.js';
  * that is.
  *
  * The safety argument is the obvious one (I3: raw PII never reaches the model),
- * but the engineering argument is at least as strong. PLAN.md §5.2 has the
- * compiler infer which typed literals were really parameters — an inference that
- * is wrong whenever a member id happens to look like a date filter. Declaring
+ * but the engineering argument is at least as strong. The design this replaced
+ * had the compiler infer which typed literals were really parameters — an
+ * inference that is wrong whenever a member id happens to look like a date
+ * filter, and wrong silently. Declaring
  * inputs up front replaces that guess with a fact, and a step compiled from
  * `$.inputs.memberId` is parameterised because it was *recorded* that way.
  */
