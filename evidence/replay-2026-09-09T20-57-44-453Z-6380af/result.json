@@ -1,0 +1,75 @@
+{
+  "kind": "success",
+  "capabilityId": "member.read_savings_balance",
+  "capabilityVersion": "1.0.0",
+  "tenant": null,
+  "evidence": {
+    "runId": "replay-2026-09-09T20-57-44-453Z-6380af",
+    "path": "evidence/replay-2026-09-09T20-57-44-453Z-6380af"
+  },
+  "stats": {
+    "startedAt": "2026-09-09T20:57:44.453Z",
+    "durationMs": 303,
+    "stepsExecuted": 4,
+    "stepsTotal": 4,
+    "recoveriesPerformed": 0,
+    "llmCalls": 0
+  },
+  "steps": [
+    {
+      "stepId": "s1",
+      "intent": "Open Member Search to look up the member by ID.",
+      "startedAt": "2026-09-09T20:57:44.464Z",
+      "durationMs": 103,
+      "resolution": "unique",
+      "matchedBy": "role-name",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s2",
+      "intent": "Enter the member ID in the search field to look up the member.",
+      "startedAt": "2026-09-09T20:57:44.567Z",
+      "durationMs": 40,
+      "resolution": "unique",
+      "matchedBy": "automation-id",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s3",
+      "intent": "Click the Search button to submit the member ID and retrieve the member record.",
+      "startedAt": "2026-09-09T20:57:44.607Z",
+      "durationMs": 90,
+      "resolution": "unique",
+      "matchedBy": "label-text",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s4",
+      "intent": "Read the current balance from the Savings row in the Account Summary table.",
+      "startedAt": "2026-09-09T20:57:44.697Z",
+      "durationMs": 62,
+      "resolution": "unique",
+      "matchedBy": "container-scoped-text",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    }
+  ],
+  "outputs": {
+    "savingsBalance": "[REDACTED:MONEY]"
+  }
+}

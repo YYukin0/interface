@@ -1,0 +1,37 @@
+[
+  {
+    "entity": "SCREEN_FINANCIAL",
+    "classification": "financial",
+    "confidence": 0.85,
+    "sink": "screenshot",
+    "count": 24
+  },
+  {
+    "entity": "SUPPLIED_IDENTIFIER",
+    "classification": "identifier",
+    "confidence": 1,
+    "sink": "prompt",
+    "count": 13
+  },
+  {
+    "entity": "MONEY",
+    "classification": "financial",
+    "confidence": 0.8,
+    "sink": "prompt",
+    "count": 8
+  },
+  {
+    "entity": "SCREEN_PII",
+    "classification": "pii",
+    "confidence": 0.6,
+    "sink": "screenshot",
+    "count": 6
+  },
+  {
+    "entity": "PERSON_NAME",
+    "classification": "pii",
+    "confidence": 0.6,
+    "sink": "prompt",
+    "count": 4
+  }
+]

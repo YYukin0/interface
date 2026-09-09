@@ -1,0 +1,52 @@
+{"event":"run_started","at":"2026-09-09T20:50:27.008Z","manifest":{"runId":"discovery-2026-09-09T20-50-27-008Z-c44469","kind":"discovery","startedAt":"2026-09-09T20:50:27.008Z","endedAt":null,"capabilityId":"member.read_savings_balance","goal":"Read the current balance of a member's savings account.","target":"http://localhost:8080/admin/index.htm","model":"kimi-k2.7-code-highspeed","schemaVersion":"1.0.0","gitSha":null}}
+{"event":"policy_evaluated","at":"2026-09-09T20:50:27.012Z","action":"navigate","decision":{"kind":"allow"}}
+{"event":"observed","at":"2026-09-09T20:50:27.065Z","location":"http://localhost:8080/admin/index.htm","digest":"dee4fa4e97f5f9ad","nodeCount":35,"truncated":false,"screenshotRef":"screenshots/step-00-observation.png"}
+{"event":"model_decided","at":"2026-09-09T20:50:29.229Z","stepIndex":0,"action":"click","rationale":"Open Member Search to look up the member by ID.","tokensIn":2186,"tokensOut":79}
+{"event":"policy_evaluated","at":"2026-09-09T20:50:29.231Z","action":"click","decision":{"kind":"allow"}}
+{"event":"acted","at":"2026-09-09T20:50:29.291Z","stepId":null,"action":"click","ok":true,"durationMs":52}
+{"event":"observed","at":"2026-09-09T20:50:29.331Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-01-observation.png"}
+{"event":"observed","at":"2026-09-09T20:50:29.362Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-01-observation.png"}
+{"event":"model_decided","at":"2026-09-09T20:50:31.087Z","stepIndex":1,"action":"type","rationale":"Enter the member ID in the search field to look up the member.","tokensIn":861,"tokensOut":118}
+{"event":"policy_evaluated","at":"2026-09-09T20:50:31.087Z","action":"type","decision":{"kind":"allow"}}
+{"event":"acted","at":"2026-09-09T20:50:31.112Z","stepId":null,"action":"type","ok":true,"durationMs":22}
+{"event":"observed","at":"2026-09-09T20:50:31.147Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-02-observation.png"}
+{"event":"observed","at":"2026-09-09T20:50:31.180Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-02-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:31.180Z","record":{"entity":"SUPPLIED_IDENTIFIER","classification":"identifier","confidence":1,"sink":"prompt","count":1}}
+{"event":"model_decided","at":"2026-09-09T20:50:32.866Z","stepIndex":2,"action":"click","rationale":"Click the Search button to submit the member ID and retrieve the member record.","tokensIn":907,"tokensOut":87}
+{"event":"policy_evaluated","at":"2026-09-09T20:50:32.867Z","action":"click","decision":{"kind":"allow"}}
+{"event":"acted","at":"2026-09-09T20:50:32.909Z","stepId":null,"action":"click","ok":true,"durationMs":41}
+{"event":"redacted","at":"2026-09-09T20:50:32.975Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:32.975Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:32.976Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-03-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:33.023Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:33.023Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:33.024Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-03-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:33.025Z","record":{"entity":"SUPPLIED_IDENTIFIER","classification":"identifier","confidence":1,"sink":"prompt","count":3}}
+{"event":"redacted","at":"2026-09-09T20:50:33.025Z","record":{"entity":"PERSON_NAME","classification":"pii","confidence":0.6,"sink":"prompt","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:33.025Z","record":{"entity":"MONEY","classification":"financial","confidence":0.8,"sink":"prompt","count":2}}
+{"event":"model_decided","at":"2026-09-09T20:50:34.940Z","stepIndex":3,"action":"extract","rationale":"Read the current balance from the Savings row in the Account Summary table.","tokensIn":1019,"tokensOut":148}
+{"event":"policy_evaluated","at":"2026-09-09T20:50:34.941Z","action":"extract","decision":{"kind":"allow"}}
+{"event":"acted","at":"2026-09-09T20:50:34.958Z","stepId":null,"action":"extract","ok":true,"durationMs":11}
+{"event":"redacted","at":"2026-09-09T20:50:35.019Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:35.020Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:35.020Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-04-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:35.072Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:35.072Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:35.074Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-04-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:35.075Z","record":{"entity":"SUPPLIED_IDENTIFIER","classification":"identifier","confidence":1,"sink":"prompt","count":3}}
+{"event":"redacted","at":"2026-09-09T20:50:35.075Z","record":{"entity":"PERSON_NAME","classification":"pii","confidence":0.6,"sink":"prompt","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:35.075Z","record":{"entity":"MONEY","classification":"financial","confidence":0.8,"sink":"prompt","count":2}}
+{"event":"redacted","at":"2026-09-09T20:50:37.086Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:37.086Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:37.088Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-05-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:37.089Z","record":{"entity":"SUPPLIED_IDENTIFIER","classification":"identifier","confidence":1,"sink":"prompt","count":3}}
+{"event":"redacted","at":"2026-09-09T20:50:37.089Z","record":{"entity":"PERSON_NAME","classification":"pii","confidence":0.6,"sink":"prompt","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:37.089Z","record":{"entity":"MONEY","classification":"financial","confidence":0.8,"sink":"prompt","count":2}}
+{"event":"redacted","at":"2026-09-09T20:50:44.427Z","record":{"entity":"SCREEN_PII","classification":"pii","confidence":0.6,"sink":"screenshot","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:44.427Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":4}}
+{"event":"observed","at":"2026-09-09T20:50:44.429Z","location":"http://localhost:8080/admin/index.htm","digest":"8a227e3d5f87803f","nodeCount":59,"truncated":false,"screenshotRef":"screenshots/step-06-observation.png"}
+{"event":"redacted","at":"2026-09-09T20:50:44.429Z","record":{"entity":"SUPPLIED_IDENTIFIER","classification":"identifier","confidence":1,"sink":"prompt","count":3}}
+{"event":"redacted","at":"2026-09-09T20:50:44.429Z","record":{"entity":"PERSON_NAME","classification":"pii","confidence":0.6,"sink":"prompt","count":1}}
+{"event":"redacted","at":"2026-09-09T20:50:44.429Z","record":{"entity":"MONEY","classification":"financial","confidence":0.8,"sink":"prompt","count":2}}
+{"event":"model_decided","at":"2026-09-09T20:50:46.147Z","stepIndex":4,"action":"navigate","rationale":"The savings account balance was extracted in the prior step, completing the goal.","tokensIn":0,"tokensOut":124}
+{"event":"run_finished","at":"2026-09-09T20:50:46.147Z","outcome":"success","durationMs":19135}

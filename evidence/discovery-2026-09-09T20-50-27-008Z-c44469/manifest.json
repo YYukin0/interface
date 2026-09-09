@@ -1,0 +1,12 @@
+{
+  "runId": "discovery-2026-09-09T20-50-27-008Z-c44469",
+  "kind": "discovery",
+  "startedAt": "2026-09-09T20:50:27.008Z",
+  "endedAt": "2026-09-09T20:50:46.147Z",
+  "capabilityId": "member.read_savings_balance",
+  "goal": "Read the current balance of a member's savings account.",
+  "target": "http://localhost:8080/admin/index.htm",
+  "model": "kimi-k2.7-code-highspeed",
+  "schemaVersion": "1.0.0",
+  "gitSha": null
+}
