@@ -38,6 +38,7 @@ Honest state of the build, so nothing here reads as more finished than it is.
 | Handoff + operator console | **Implemented** — control lease, CDP screencast, signed console link, 32 tests; a real takeover in [`evidence/handoff-*`](evidence) |
 
 Design write-up (the brief's seven headings): [REPORT.md](REPORT.md).
+The same seven sections at length: [DESIGN-NOTES.md](DESIGN-NOTES.md).
 Committed runs, and what each one demonstrates: [evidence/README.md](evidence/README.md).
 Design decisions and their rationale: [AGENTS.md](AGENTS.md) §2.
 
