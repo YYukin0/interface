@@ -260,11 +260,20 @@ describe('control transfer', () => {
     // reloading the page during the end-to-end run, not by reasoning about it.
     const response = await fetch(url('/api/frames'));
     const reader = response.body.getReader();
-    await reader.read(); // ": connected"
 
-    const { value } = await reader.read();
-    const text = new TextDecoder().decode(value);
-    assert.equal(JSON.parse(text.slice(6)).data, 'AAAA', 'the last frame should be replayed');
+    // The server writes ": connected" and the replayed frame back to back, so
+    // whether they arrive as one chunk or two is up to the kernel, not up to us
+    // — and it differs between macOS and Linux. Read until the stream has
+    // yielded a `data:` event rather than assuming one read is one event.
+    const decoder = new TextDecoder();
+    let buffered = '';
+    let frame;
+    while ((frame = buffered.match(/^data: (.*)$/m)) === null) {
+      const { value, done } = await reader.read();
+      assert.ok(!done, 'the stream closed before replaying a frame');
+      buffered += decoder.decode(value, { stream: true });
+    }
+    assert.equal(JSON.parse(frame[1]).data, 'AAAA', 'the last frame should be replayed');
 
     await reader.cancel();
   });
