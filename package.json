@@ -11,7 +11,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "typecheck": "tsc -b tsconfig.json --dry",
+    "typecheck": "tsc -b tsconfig.json --force",
     "build": "tsc -b tsconfig.json",
     "test": "npm run test --workspaces --if-present",
     "app": "node apps/legacy-app/src/server.mjs",
