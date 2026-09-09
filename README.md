@@ -61,6 +61,30 @@ npm install
 npm run build
 ```
 
+### Keys and config
+
+| Variable | Needed by | Default |
+|---|---|---|
+| `CUA_LLM_API_KEY` | discovery only | — (required unless `--check`) |
+| `CUA_LLM_BASE_URL` | discovery only | `api.anthropic.com` |
+| `CUA_LLM_MODEL` | discovery only | `claude-opus-5` |
+| `CUA_LLM_TOOL_CHOICE` | discovery only | `any`; use `auto` for endpoints that refuse a required tool choice |
+| `CUA_APP_USERNAME` / `CUA_APP_PASSWORD` | the target application | `teller01` / `letmein` |
+| `PORT` | the target application | `8080` |
+
+[`.env.example`](.env.example) lists all of them with commentary. Nothing is passed
+on the command line, because argv is visible in `ps` and lands in shell history.
+`policy.json` holds the origin allowlist and risk dispositions; it is default-deny,
+so moving the application off port 8080 means adding the new origin there too.
+
+**Running with no live services.** There is no third-party service to reach: the
+target application is `apps/legacy-app`, started by `npm run app` (or
+`docker compose up`), and everything below except discovery runs against it with no
+credentials of any kind. Discovery is the one step that needs a model key, and
+`node scripts/discover.mjs <job> --check` exercises the whole pipeline — browser,
+sign-in, policy, observation, redaction, evidence — on a machine that has none,
+stopping just before the network call.
+
 ## What you can run today
 
 Typecheck everything:
