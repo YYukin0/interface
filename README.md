@@ -27,11 +27,11 @@ Honest state of the build, so nothing here reads as more finished than it is.
 | Legacy target app (`apps/legacy-app`) | **Implemented** — frameset, two tenants, six injectable faults, 14 tests |
 | Policy engine + redactor | **Implemented** — 37 tests; the redactor's limits are asserted, not just documented |
 | Surface driver (`packages/surface-web`) | **Implemented** — multi-locator harvest and agreement voting, 23 tests |
-| Evidence writer | **Implemented** — one directory per run, redacted on the way to disk, 14 tests |
+| Evidence writer | **Implemented** — one directory per run, redacted on the way to disk, 16 tests |
 | Discovery loop | **Implemented** — 53 tests, plus a real model-driven run in [`evidence/`](evidence) |
 | Compiler | **Implemented** — 27 tests; output in [`capabilities/`](capabilities) |
 | Replay engine | **Implemented** — 36 tests against a real browser; five runs of one artifact produce one result digest |
-| Handoff + operator console | **Implemented** — control lease, CDP screencast, signed console link, 30 tests; a real takeover in [`evidence/handoff-*`](evidence) |
+| Handoff + operator console | **Implemented** — control lease, CDP screencast, signed console link, 32 tests; a real takeover in [`evidence/handoff-*`](evidence) |
 
 Design write-up (the brief's seven headings): [REPORT.md](REPORT.md).
 Committed runs, and what each one demonstrates: [evidence/README.md](evidence/README.md).
@@ -192,7 +192,7 @@ Step 3 prints the answer, where the evidence went, and how many times a model wa
 success  {"savingsBalance":"$18,904.55"}
          evidence evidence/replay-2026-09-09T14-02-31-592Z-27aeba
          4/4 steps · 0 recoveries · 0 llm calls · 0.3s
-         digest 2c39390a478df4ce
+         digest ea7b7def38e646bb
 ```
 
 The fixture application ships six injectable faults, reachable by member id, so each arm of the result contract can be produced on demand rather than described:
