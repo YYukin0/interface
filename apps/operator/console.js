@@ -222,6 +222,23 @@ for (const [id, disposition] of [
     const record = await post('/api/handback', { disposition, note: el('note').value.trim() });
     if (record === null) return;
     stream.close();
+
+    // The page is now a receipt, not a control surface, and has to stop behaving
+    // like one. Two things go wrong if it does not. The badge keeps saying
+    // "held by you until 10:08 PM" over a session this operator has already let
+    // go of — the one line on screen they would trust to tell them whether they
+    // still have control, saying the opposite of the truth. And the poll below
+    // outlives the intervention it was polling: `/api/session` answers 410 once
+    // the intervention closes, so five seconds later `fail()` overwrites the
+    // confirmation of what was just recorded with a stale HTTP error.
+    clearInterval(poll);
+    lease = null;
+    el('lease').className = `lease ${disposition === 'resume' ? 'automation' : 'none'}`;
+    el('lease').textContent =
+      disposition === 'resume'
+        ? 'handed back — automation has the session again'
+        : 'handed back — this session is finished';
+
     el('handback-controls').hidden = true;
     canvas.classList.remove('live');
     el('status').textContent =
@@ -235,5 +252,5 @@ if (operatorId !== null) el('operator').value = operatorId;
 await refresh();
 // Cheap and sufficient: a lease can expire while the operator is reading, and
 // the page should say so rather than let them click into a session they no
-// longer hold.
-setInterval(() => void refresh().catch(() => undefined), 5000);
+// longer hold. Stopped on hand-back, where there is no longer a lease to watch.
+const poll = setInterval(() => void refresh().catch(() => undefined), 5000);
