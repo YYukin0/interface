@@ -178,3 +178,27 @@ test('the search screen is identical across tenants, so s2 and s3 need no overri
     assert.match(body, /<input type="button" value="Search"/);
   }
 });
+
+/**
+ * `npm run app` is the README's first command, so its first failure is the
+ * reviewer's first impression. It used to be a raw Node stack trace.
+ */
+test('a port collision explains itself instead of printing a stack trace', async () => {
+  // The `before` hook already holds PORT; a second process must lose the race.
+  const second = spawn(process.execPath, [join(here, '..', 'src', 'server.mjs')], {
+    env: { ...process.env, PORT: String(PORT) },
+    stdio: ['ignore', 'ignore', 'pipe'],
+  });
+
+  let stderr = '';
+  second.stderr.on('data', (chunk) => (stderr += chunk));
+  const code = await new Promise((resolve) => second.on('exit', resolve));
+
+  assert.equal(code, 1, 'it should exit non-zero rather than crash or linger');
+  assert.match(stderr, new RegExp(`port ${PORT} is already in use`));
+  assert.match(stderr, /PORT=8090 npm run app/);
+  // Moving the port alone is not enough, and saying so here is the point:
+  // policy is default-deny on origin, so replay would refuse the new one.
+  assert.match(stderr, /default-deny on origin/);
+  assert.doesNotMatch(stderr, /Emitted 'error' event|at Server\./);
+});

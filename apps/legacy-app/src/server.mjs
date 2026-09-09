@@ -242,6 +242,31 @@ const server = app.listen(PORT, () => {
   );
 });
 
+/**
+ * `npm run app` is the first command in the README, so its first failure is the
+ * first impression. Unhandled, EADDRINUSE arrives as a twenty-line Node stack
+ * ending in `Emitted 'error' event on Server instance`, which says nothing about
+ * the one thing that went wrong or the one thing to do about it.
+ *
+ * The policy line is not padding. Moving the port is the obvious fix and it does
+ * not work on its own: the policy engine is default-deny on origin, so replay
+ * against a port that is not in `policy.json` refuses with POLICY_DENIED — which
+ * is the engine behaving correctly and reads like a second, unrelated breakage.
+ */
+server.on('error', (cause) => {
+  if (cause?.code !== 'EADDRINUSE') throw cause;
+  process.stderr.write(
+    `legacy-app: port ${PORT} is already in use.\n` +
+      `  Often an earlier run that outlived its terminal. Find it with:\n` +
+      `    lsof -nP -iTCP:${PORT} -sTCP:LISTEN\n` +
+      `  Or start somewhere else:\n` +
+      `    PORT=8090 npm run app\n` +
+      `  If you move it, add the new origin to policy.json's allowedOrigins and pass\n` +
+      `  --origin http://localhost:8090 to replay; policy is default-deny on origin.\n`,
+  );
+  process.exit(1);
+});
+
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, () => server.close(() => process.exit(0)));
 }

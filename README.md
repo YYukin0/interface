@@ -28,7 +28,7 @@ Honest state of the build, so nothing here reads as more finished than it is.
 |---|---|
 | Contract layer (`packages/contracts`) | **Implemented** — 40 invariant tests |
 | Example capability artifact | **Implemented** — parses, projects to a tool definition, resolves across two tenants |
-| Legacy target app (`apps/legacy-app`) | **Implemented** — frameset, two tenants, six injectable faults, 14 tests |
+| Legacy target app (`apps/legacy-app`) | **Implemented** — frameset, two tenants, six injectable faults, 15 tests |
 | Policy engine + redactor | **Implemented** — 37 tests; the redactor's limits are asserted, not just documented |
 | Surface driver (`packages/surface-web`) | **Implemented** — multi-locator harvest and agreement voting, 23 tests |
 | Evidence writer | **Implemented** — one directory per run, redacted on the way to disk, 16 tests |
