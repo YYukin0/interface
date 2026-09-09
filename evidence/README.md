@@ -21,36 +21,39 @@ recording.jsonl   discovery only: the compiler's input (I5 — this is not the a
 
 | Directory | |
 |---|---|
-| `discovery-2026-09-09T00-18-28-162Z-6998d7` | A genuine model-driven run against the live application: 6 model decisions, 4 actions, 5 policy evaluations, 10 redactions. `capabilities/member.read_savings_balance.capability.json` was compiled from this directory and points back at it via `provenance.traceRef`. |
+| `discovery-2026-09-09T00-18-28-162Z-6998d7` | A genuine model-driven run against the live application, by **`k3`**: 6 model decisions, 4 actions, 5 policy evaluations, 10 redactions. `capabilities/member.read_savings_balance.capability.json` was compiled from this directory and points back at it via `provenance.traceRef`. |
 
-### The same procedure, discovered by a different vendor's model
+### The same procedure, discovered a second time by a different model
 
 The system's central claim is that discovery is model-dependent and replay is
-not. That is cheap to assert with one model and one run, so here it is with two
-vendors.
+not. That is cheap to assert from a single run, so here is the same job done
+twice, by two different models reached through two different endpoints. Both
+speak the Anthropic Messages protocol, which is all `packages/discovery` knows
+about them — the model is configuration, not a dependency.
 
 | Directory | |
 |---|---|
-| `discovery-2026-09-09T20-50-27-008Z-c44469` | The same job, driven by **kimi-k2.7-code-highspeed** instead of Claude: 4 steps, 7 model calls, 6852 in / 1714 out, 19s. `manifest.json` names the model, which is the point of naming it. The artifact the compiler produced from this run is checked in beside its recording. |
-| `replay-2026-09-09T20-57-44-453Z-6380af` | That artifact replayed with no model credentials in the environment at all: `success`, `0 llm calls`, digest **`ea7b7def38e646bb`** — byte-identical to the digest the Claude-discovered artifact produces for the same input. |
+| `discovery-2026-09-09T20-50-27-008Z-c44469` | The same job, driven by **`kimi-k2.7-code-highspeed`**: 4 steps, 7 model calls, 6852 in / 1714 out, 19s. `manifest.json` names the model, which is the point of naming it. The artifact the compiler produced from this run is checked in beside its recording. |
+| `replay-2026-09-09T20-57-44-453Z-6380af` | That artifact replayed with no model credentials in the environment at all: `success`, `0 llm calls`, digest **`ea7b7def38e646bb`** — byte-identical to the digest the `k3`-discovered artifact produces for the same input. |
 
 The two artifacts are not identical, and the ways they differ are the argument:
 
-- The **prose differs**, as it should. Claude wrote "Member Search is the natural
-  starting point to look up a member by their member number"; Kimi wrote "Open
-  Member Search to look up the member by ID". Two models describing one screen.
+- The **prose differs**, as it should. `k3` wrote "Member Search is the natural
+  starting point to look up a member by their member number";
+  `kimi-k2.7-code-highspeed` wrote "Open Member Search to look up the member by
+  ID". Two models describing one screen.
 - The **procedure is the same** — four steps, same order — and that is what
   survives compilation into something executable, which is why the digests match.
-- Kimi's artifact declares **zero business outcomes** and sits at `draft`; the
+- The second artifact declares **zero business outcomes** and sits at `draft`; the
   checked-in one declares two and sits at `review`. Neither model saw an error
   state, so the compiler raised `no_business_outcomes_declared` on both. On the
   checked-in artifact a human closed it. That gap *is* the review loop, and this
   pair is what it looks like before and after.
 
-One caveat, because the run does not reproduce without it: Kimi enables extended
-thinking unconditionally and its API rejects thinking alongside a required tool
-choice, so this run needed `CUA_LLM_TOOL_CHOICE=auto`. With the default `any` it
-returns HTTP 400 and discovery stops at step 0. Reproduce with:
+One caveat, because the run does not reproduce without it: this model enables
+extended thinking unconditionally and its API rejects thinking alongside a
+required tool choice, so the run needed `CUA_LLM_TOOL_CHOICE=auto`. With the
+default `any` it returns HTTP 400 and discovery stops at step 0. Reproduce with:
 
 ```bash
 CUA_LLM_API_KEY=… CUA_LLM_BASE_URL=https://api.moonshot.ai/anthropic \

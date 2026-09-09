@@ -32,7 +32,7 @@ Honest state of the build, so nothing here reads as more finished than it is.
 | Policy engine + redactor | **Implemented** — 37 tests; the redactor's limits are asserted, not just documented |
 | Surface driver (`packages/surface-web`) | **Implemented** — multi-locator harvest and agreement voting, 23 tests |
 | Evidence writer | **Implemented** — one directory per run, redacted on the way to disk, 16 tests |
-| Discovery loop | **Implemented** — 56 tests, plus two real model-driven runs in [`evidence/`](evidence), by different vendors' models |
+| Discovery loop | **Implemented** — 56 tests, plus two real model-driven runs in [`evidence/`](evidence), by two different models |
 | Compiler | **Implemented** — 27 tests; output in [`capabilities/`](capabilities) |
 | Replay engine | **Implemented** — 36 tests against a real browser; five runs of one artifact produce one result digest |
 | Handoff + operator console | **Implemented** — control lease, CDP screencast, signed console link, 32 tests; a real takeover in [`evidence/handoff-*`](evidence) |
