@@ -1,0 +1,19 @@
+{
+  "goal": "Read the current balance of a member's savings account.",
+  "entryUrl": "http://localhost:8080/admin/index.htm",
+  "surface": "legacy-web",
+  "app": "northgate-core-admin",
+  "tenant": "tenant-a",
+  "proposedId": "member.read_savings_balance",
+  "inputs": [
+    {
+      "name": "memberId",
+      "description": "the five digit member number to look up",
+      "classification": "identifier"
+    }
+  ],
+  "maxSteps": 14,
+  "deadlineMs": 300000,
+  "model": "k3",
+  "allowMutating": false
+}

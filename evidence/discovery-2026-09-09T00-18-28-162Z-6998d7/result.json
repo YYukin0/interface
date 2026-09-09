@@ -1,0 +1,17 @@
+{
+  "kind": "completed",
+  "summary": "Looked up the member via Member Search using $.inputs.memberId, opened the member detail page, and extracted the Savings account balance from the Account Summary as \"savingsBalance\".",
+  "evidence": {
+    "runId": "discovery-2026-09-09T00-18-28-162Z-6998d7",
+    "path": "evidence/discovery-2026-09-09T00-18-28-162Z-6998d7"
+  },
+  "stats": {
+    "startedAt": "2026-09-09T00:18:28.162Z",
+    "durationMs": 28350,
+    "stepsTaken": 5,
+    "modelCalls": 6,
+    "tokensIn": 4519,
+    "tokensOut": 712,
+    "policyDenials": 0
+  }
+}

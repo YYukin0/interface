@@ -1,0 +1,12 @@
+{
+  "runId": "discovery-2026-09-09T00-18-28-162Z-6998d7",
+  "kind": "discovery",
+  "startedAt": "2026-09-09T00:18:28.162Z",
+  "endedAt": "2026-09-09T00:18:56.516Z",
+  "capabilityId": "member.read_savings_balance",
+  "goal": "Read the current balance of a member's savings account.",
+  "target": "http://localhost:8080/admin/index.htm",
+  "model": "k3",
+  "schemaVersion": "1.0.0",
+  "gitSha": null
+}

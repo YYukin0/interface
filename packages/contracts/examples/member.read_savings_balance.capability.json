@@ -1,0 +1,276 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "member.read_savings_balance",
+  "version": "1.0.0",
+  "displayName": "Read member savings balance",
+
+  "description": "Looks up a member by their member ID in the core admin console and returns the current balance and status of their primary savings account. Use when an agent needs a member's live savings balance and no API is available. Returns MEMBER_NOT_FOUND if the ID does not exist, and PERMISSION_DENIED if the operator profile cannot view the account.",
+
+  "inputs": {
+    "type": "object",
+    "required": ["memberId"],
+    "additionalProperties": false,
+    "properties": {
+      "memberId": {
+        "type": "string",
+        "pattern": "^[0-9]{5}$",
+        "description": "Five-digit member number as printed on the member's statement."
+      }
+    }
+  },
+
+  "outputs": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "savingsBalance": {
+        "type": "string",
+        "description": "Current balance, formatted as it appears on screen, e.g. \"$4,231.08\"."
+      },
+      "accountStatus": {
+        "type": "string",
+        "enum": ["active", "dormant", "frozen"]
+      }
+    }
+  },
+
+  "sensitivity": {
+    "memberId": "identifier",
+    "savingsBalance": "financial",
+    "accountStatus": "none"
+  },
+
+  "businessOutcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "description": "No member exists with the supplied ID. A legitimate answer, not a failure.",
+      "retryable": true,
+      "detect": {
+        "id": "chk.no_results",
+        "assert": "text-present",
+        "value": "No records matched your search",
+        "target": null,
+        "timeoutMs": 5000
+      }
+    },
+    {
+      "code": "PERMISSION_DENIED",
+      "description": "The operator profile is not entitled to view this member's accounts.",
+      "retryable": false,
+      "detect": {
+        "id": "chk.denied_banner",
+        "assert": "text-present",
+        "value": "You are not authorized to view this record",
+        "target": null,
+        "timeoutMs": 5000
+      }
+    }
+  ],
+
+  "surface": {
+    "kind": "legacy-web",
+    "app": "cu-coreadmin",
+    "appVersion": "9.x",
+    "entryPoint": "/admin/index.htm"
+  },
+
+  "steps": [
+    {
+      "id": "s1",
+      "intent": "Open the member search screen from the left navigation",
+      "risk": "safe",
+      "action": { "type": "click" },
+      "timeoutMs": 8000,
+      "optional": false,
+      "target": {
+        "frame": ["nav"],
+        "containerHint": "Left navigation menu",
+        "positionHint": null,
+        "expectedRole": "link",
+        "expectedName": "Member Search",
+        "candidates": [
+          { "strategy": "role-name", "value": "link:Member Search", "confidence": 0.9, "note": "accessible name is stable across tenant branding" },
+          { "strategy": "container-scoped-text", "value": "Left navigation menu >> Member Search", "confidence": 0.75, "note": null },
+          { "strategy": "robula-xpath", "value": "//table[2]//td[1]/a[contains(.,'Member')]", "confidence": 0.45, "note": "table-based layout, no test ids available" },
+          { "strategy": "viewport-coords", "value": "0.0656,0.2677", "confidence": 0.15, "note": "last resort; frameset layout is fixed-width" }
+        ]
+      },
+      "checkpoint": {
+        "id": "chk.on_search",
+        "assert": "role-name-present",
+        "value": "textbox:Member ID",
+        "target": null,
+        "timeoutMs": 8000
+      },
+      "recover": [
+        { "on": "unexpected_dialog", "do": "dismiss_dialog", "maxAttempts": 1 },
+        { "on": "transient_load", "do": "wait_retry", "maxAttempts": 2 }
+      ]
+    },
+    {
+      "id": "s2",
+      "intent": "Type the member ID into the search field",
+      "risk": "safe",
+      "action": {
+        "type": "type",
+        "clearFirst": true,
+        "value": { "from": "input", "ref": "$.inputs.memberId" }
+      },
+      "timeoutMs": 8000,
+      "optional": false,
+      "checkpoint": null,
+      "recover": [],
+      "target": {
+        "frame": ["content"],
+        "containerHint": "Search criteria",
+        "positionHint": null,
+        "expectedRole": "textbox",
+        "expectedName": "Member ID",
+        "candidates": [
+          { "strategy": "label-text", "value": "Member ID", "confidence": 0.88, "note": "label is adjacent td, resolved via a11y LabeledBy" },
+          { "strategy": "automation-id", "value": "txtMemberId", "confidence": 0.7, "note": "legacy name attribute, may differ per tenant version" },
+          { "strategy": "robula-xpath", "value": "//form[@name='srch']//input[@type='text'][1]", "confidence": 0.4, "note": null }
+        ]
+      }
+    },
+    {
+      "id": "s3",
+      "intent": "Submit the search",
+      "risk": "safe",
+      "action": { "type": "click" },
+      "timeoutMs": 15000,
+      "optional": false,
+      "target": {
+        "frame": ["content"],
+        "containerHint": "Search criteria",
+        "positionHint": null,
+        "expectedRole": "button",
+        "expectedName": "Search",
+        "candidates": [
+          { "strategy": "role-name", "value": "button:Search", "confidence": 0.85, "note": "input type=button, name comes from value attribute" },
+          { "strategy": "css", "value": "form[name='srch'] input[value='Search']", "confidence": 0.6, "note": null },
+          { "strategy": "robula-xpath", "value": "//form[@name='srch']//input[@value='Search']", "confidence": 0.5, "note": null }
+        ]
+      },
+      "checkpoint": {
+        "id": "chk.on_detail",
+        "assert": "text-present",
+        "value": "Account Summary",
+        "target": null,
+        "timeoutMs": 15000
+      },
+      "recover": [
+        { "on": "transient_load", "do": "wait_retry", "maxAttempts": 2 },
+        { "on": "session_expired", "do": "reauthenticate", "maxAttempts": 1 }
+      ]
+    },
+    {
+      "id": "s4",
+      "intent": "Read the savings balance from the account summary table",
+      "risk": "safe",
+      "action": { "type": "extract", "into": "$.outputs.savingsBalance", "as": "money" },
+      "timeoutMs": 8000,
+      "optional": false,
+      "checkpoint": null,
+      "recover": [],
+      "target": {
+        "frame": ["content"],
+        "containerHint": "Account Summary",
+        "positionHint": "row labelled Savings, Balance column",
+        "expectedRole": "cell",
+        "expectedName": null,
+        "candidates": [
+          { "strategy": "container-scoped-text", "value": "Account Summary >> row:Savings >> col:Balance", "confidence": 0.8, "note": "semantic row/column addressing survives column reordering" },
+          { "strategy": "robula-xpath", "value": "//table[@class='tbl1']//tr[td[1][contains(.,'Savings')]]/td[3]", "confidence": 0.5, "note": "breaks if a column is inserted" },
+          { "strategy": "structural-path", "value": "table[1]/row[2]/cell[3]", "confidence": 0.25, "note": null }
+        ]
+      }
+    },
+    {
+      "id": "s5",
+      "intent": "Read the account status shown beside the balance",
+      "risk": "safe",
+      "action": { "type": "extract", "into": "$.outputs.accountStatus", "as": "text" },
+      "timeoutMs": 8000,
+      "optional": true,
+      "checkpoint": null,
+      "recover": [],
+      "target": {
+        "frame": ["content"],
+        "containerHint": "Account Summary",
+        "positionHint": "row labelled Savings, Status column",
+        "expectedRole": "cell",
+        "expectedName": null,
+        "candidates": [
+          { "strategy": "container-scoped-text", "value": "Account Summary >> row:Savings >> col:Status", "confidence": 0.78, "note": null },
+          { "strategy": "robula-xpath", "value": "//table[@class='tbl1']//tr[td[1][contains(.,'Savings')]]/td[4]", "confidence": 0.45, "note": null }
+        ]
+      }
+    }
+  ],
+
+  "successCondition": {
+    "checkpoints": ["chk.on_search", "chk.on_detail"],
+    "requiredOutputs": ["savingsBalance"]
+  },
+
+  "provenance": {
+    "discoveredBy": "claude-opus-5",
+    "discoveredAt": "2026-09-09T10:22:03Z",
+    "traceRef": "evidence/discovery-2026-09-09T10-22-03Z/trace.jsonl",
+    "compilerVersion": "0.1.0",
+    "humanEdits": [
+      {
+        "at": "2026-09-09T11:04:00Z",
+        "by": "yyukin0",
+        "note": "Promoted the hard-coded member id in s2 to an input parameter, and demoted the s4 xpath candidate below the container-scoped one after checking tenant-b."
+      }
+    ]
+  },
+
+  "approval": {
+    "state": "draft",
+    "by": null,
+    "at": null,
+    "observedStability": null
+  },
+
+  "tenantOverrides": {
+    "tenant-b": {
+      "note": "Same vendor product, rebranded. Nav link reads 'Find Member' and the summary table gained a Fees column, shifting Balance from td[3] to td[4].",
+      "entryPoint": null,
+      "steps": {
+        "s1": {
+          "timeoutMs": null,
+          "skip": false,
+          "target": {
+            "frame": ["nav"],
+            "containerHint": "Left navigation menu",
+            "positionHint": null,
+            "expectedRole": "link",
+            "expectedName": "Find Member",
+            "candidates": [
+              { "strategy": "role-name", "value": "link:Find Member", "confidence": 0.9, "note": "renamed in this tenant's branding pack" },
+              { "strategy": "container-scoped-text", "value": "Left navigation menu >> Find Member", "confidence": 0.7, "note": null }
+            ]
+          }
+        },
+        "s4": {
+          "timeoutMs": null,
+          "skip": false,
+          "target": {
+            "frame": ["content"],
+            "containerHint": "Account Summary",
+            "positionHint": "row labelled Savings, Balance column",
+            "expectedRole": "cell",
+            "expectedName": null,
+            "candidates": [
+              { "strategy": "container-scoped-text", "value": "Account Summary >> row:Savings >> col:Balance", "confidence": 0.8, "note": "unchanged: semantic addressing was immune to the inserted column" },
+              { "strategy": "robula-xpath", "value": "//table[@class='tbl1']//tr[td[1][contains(.,'Savings')]]/td[4]", "confidence": 0.5, "note": "shifted by the Fees column" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

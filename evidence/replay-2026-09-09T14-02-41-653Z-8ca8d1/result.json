@@ -1,0 +1,112 @@
+{
+  "kind": "failure",
+  "capabilityId": "member.read_savings_balance",
+  "capabilityVersion": "1.0.0",
+  "tenant": null,
+  "evidence": {
+    "runId": "replay-2026-09-09T14-02-41-653Z-8ca8d1",
+    "path": "evidence/replay-2026-09-09T14-02-41-653Z-8ca8d1"
+  },
+  "stats": {
+    "startedAt": "2026-09-09T14:02:41.652Z",
+    "durationMs": 20632,
+    "stepsExecuted": 4,
+    "stepsTotal": 4,
+    "recoveriesPerformed": 1,
+    "llmCalls": 0
+  },
+  "steps": [
+    {
+      "stepId": "s1",
+      "intent": "Member Search is the natural starting point to look up a member by their member number.",
+      "startedAt": "2026-09-09T14:02:41.662Z",
+      "durationMs": 113,
+      "resolution": "unique",
+      "matchedBy": "role-name",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s2",
+      "intent": "Enter the member number parameter into the Member ID field to search for the member.",
+      "startedAt": "2026-09-09T14:02:41.775Z",
+      "durationMs": 62,
+      "resolution": "unique",
+      "matchedBy": "automation-id",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s3",
+      "intent": "The member number is entered; submit the search to find the member.",
+      "startedAt": "2026-09-09T14:02:41.837Z",
+      "durationMs": 10186,
+      "resolution": "unique",
+      "matchedBy": "label-text",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [
+        {
+          "condition": "session_expired",
+          "took": "reauthenticate",
+          "attempt": 1,
+          "succeeded": true
+        }
+      ],
+      "status": "skipped",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s1",
+      "intent": "Member Search is the natural starting point to look up a member by their member number.",
+      "startedAt": "2026-09-09T14:02:52.023Z",
+      "durationMs": 85,
+      "resolution": "unique",
+      "matchedBy": "role-name",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s2",
+      "intent": "Enter the member number parameter into the Member ID field to search for the member.",
+      "startedAt": "2026-09-09T14:02:52.108Z",
+      "durationMs": 43,
+      "resolution": "unique",
+      "matchedBy": "automation-id",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s3",
+      "intent": "The member number is entered; submit the search to find the member.",
+      "startedAt": "2026-09-09T14:02:52.151Z",
+      "durationMs": 10103,
+      "resolution": "unique",
+      "matchedBy": "label-text",
+      "agreement": 1,
+      "checkpointPassed": false,
+      "recoveries": [],
+      "status": "failed",
+      "screenshotRef": null
+    }
+  ],
+  "failure": {
+    "class": "SESSION_UNRECOVERABLE",
+    "stepId": "s3",
+    "expected": "a live signed-on session",
+    "observed": "the application returned to sign-on",
+    "detail": "re-authentication was attempted and did not restore the flow"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "escalated",
+  "capabilityId": "member.read_savings_balance",
+  "capabilityVersion": "1.0.0",
+  "tenant": null,
+  "evidence": {
+    "runId": "replay-2026-09-09T13-52-48-383Z-1d2f61",
+    "path": "evidence/replay-2026-09-09T13-52-48-383Z-1d2f61"
+  },
+  "stats": {
+    "startedAt": "2026-09-09T13:52:48.383Z",
+    "durationMs": 6254,
+    "stepsExecuted": 0,
+    "stepsTotal": 4,
+    "recoveriesPerformed": 0,
+    "llmCalls": 0
+  },
+  "steps": [
+    {
+      "stepId": "s1",
+      "intent": "Member Search is the natural starting point to look up a member by their member number.",
+      "startedAt": "2026-09-09T13:52:48.392Z",
+      "durationMs": 6227,
+      "resolution": "not_found",
+      "matchedBy": null,
+      "agreement": 0,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "failed",
+      "screenshotRef": null
+    }
+  ],
+  "interventionId": "iv-replay-2026-09-09T13-52-48-383Z-1d2f61",
+  "reason": "locator_unresolved",
+  "resumeFrom": null
+}

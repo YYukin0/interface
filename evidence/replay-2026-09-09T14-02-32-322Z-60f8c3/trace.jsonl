@@ -1,0 +1,17 @@
+{"event":"run_started","at":"2026-09-09T14:02:32.322Z","manifest":{"runId":"replay-2026-09-09T14-02-32-322Z-60f8c3","kind":"replay","startedAt":"2026-09-09T14:02:32.322Z","endedAt":null,"capabilityId":"member.read_savings_balance","goal":null,"target":"http://localhost:8080/admin/index.htm","model":null,"schemaVersion":"1.0.0","gitSha":null}}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:32.325Z","action":"navigate","decision":{"kind":"allow"}}
+{"event":"observed","at":"2026-09-09T14:02:32.373Z","location":"http://localhost:8080/admin/index.htm","digest":"dee4fa4e97f5f9ad","nodeCount":35,"truncated":false,"screenshotRef":"screenshots/step-01-s1-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:32.374Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:32.375Z","stepId":"s1","status":"unique","matchedBy":"role-name","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:32.414Z","stepId":"s1","action":"click","ok":true,"durationMs":38}
+{"event":"checkpoint_evaluated","at":"2026-09-09T14:02:32.442Z","checkpointId":"chk.member_id","passed":true,"expected":"textbox:Member ID","observed":"found textbox:Member ID","waitedMs":27}
+{"event":"observed","at":"2026-09-09T14:02:32.473Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-02-s2-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:32.473Z","action":"type","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:32.475Z","stepId":"s2","status":"unique","matchedBy":"automation-id","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:32.487Z","stepId":"s2","action":"type","ok":true,"durationMs":12}
+{"event":"observed","at":"2026-09-09T14:02:32.523Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-03-s3-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:32.523Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:32.525Z","stepId":"s3","status":"unique","matchedBy":"label-text","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:32.566Z","stepId":"s3","action":"click","ok":true,"durationMs":41}
+{"event":"business_outcome","at":"2026-09-09T14:02:32.577Z","code":"MEMBER_NOT_FOUND","message":"No member exists with the supplied ID. This is an answer, not a failure: the caller asked whether the member has a savings balance and the system replied that there is no such member."}
+{"event":"run_finished","at":"2026-09-09T14:02:32.578Z","outcome":"outcome","durationMs":253}

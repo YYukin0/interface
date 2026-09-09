@@ -1,0 +1,75 @@
+{
+  "kind": "success",
+  "capabilityId": "member.read_savings_balance",
+  "capabilityVersion": "1.0.0",
+  "tenant": null,
+  "evidence": {
+    "runId": "replay-2026-09-09T14-02-03-909Z-964f1e",
+    "path": "evidence/replay-2026-09-09T14-02-03-909Z-964f1e"
+  },
+  "stats": {
+    "startedAt": "2026-09-09T14:02:03.909Z",
+    "durationMs": 326,
+    "stepsExecuted": 4,
+    "stepsTotal": 4,
+    "recoveriesPerformed": 0,
+    "llmCalls": 0
+  },
+  "steps": [
+    {
+      "stepId": "s1",
+      "intent": "Member Search is the natural starting point to look up a member by their member number.",
+      "startedAt": "2026-09-09T14:02:03.916Z",
+      "durationMs": 108,
+      "resolution": "unique",
+      "matchedBy": "role-name",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s2",
+      "intent": "Enter the member number parameter into the Member ID field to search for the member.",
+      "startedAt": "2026-09-09T14:02:04.024Z",
+      "durationMs": 46,
+      "resolution": "unique",
+      "matchedBy": "automation-id",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s3",
+      "intent": "The member number is entered; submit the search to find the member.",
+      "startedAt": "2026-09-09T14:02:04.070Z",
+      "durationMs": 91,
+      "resolution": "unique",
+      "matchedBy": "label-text",
+      "agreement": 1,
+      "checkpointPassed": true,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    },
+    {
+      "stepId": "s4",
+      "intent": "The member detail page is open; capture the redacted savings account balance as the requested output.",
+      "startedAt": "2026-09-09T14:02:04.161Z",
+      "durationMs": 74,
+      "resolution": "unique",
+      "matchedBy": "container-scoped-text",
+      "agreement": 1,
+      "checkpointPassed": null,
+      "recoveries": [],
+      "status": "ok",
+      "screenshotRef": null
+    }
+  ],
+  "outputs": {
+    "savingsBalance": "[REDACTED:MONEY]"
+  }
+}

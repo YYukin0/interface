@@ -1,0 +1,418 @@
+{
+  "at": "2026-09-09T14:03:02.254Z",
+  "surface": "legacy-web",
+  "location": "http://localhost:8080/admin/index.htm",
+  "title": "Sign On",
+  "root": {
+    "ref": "f0e-root",
+    "role": "document",
+    "name": null,
+    "value": null,
+    "states": [],
+    "box": null,
+    "children": [
+      {
+        "ref": "f0e26",
+        "role": "table",
+        "name": null,
+        "value": null,
+        "states": [],
+        "box": [
+          450,
+          8,
+          380,
+          159
+        ],
+        "children": [
+          {
+            "ref": "f0e25",
+            "role": "row",
+            "name": null,
+            "value": null,
+            "states": [],
+            "box": [
+              450,
+              8,
+              380,
+              159
+            ],
+            "children": [
+              {
+                "ref": "f0e24",
+                "role": "cell",
+                "name": "Northgate Federal Credit Union — Sign On Operator ID Password",
+                "value": null,
+                "states": [],
+                "box": [
+                  450,
+                  8,
+                  380,
+                  159
+                ],
+                "children": [
+                  {
+                    "ref": "f0e23",
+                    "role": "table",
+                    "name": null,
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      450,
+                      8,
+                      380,
+                      159
+                    ],
+                    "children": [
+                      {
+                        "ref": "f0e22",
+                        "role": "row",
+                        "name": null,
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          452,
+                          10,
+                          376,
+                          155
+                        ],
+                        "children": [
+                          {
+                            "ref": "f0e21",
+                            "role": "cell",
+                            "name": "Northgate Federal Credit Union — Sign On Operator ID Password",
+                            "value": null,
+                            "states": [],
+                            "box": [
+                              452,
+                              10,
+                              376,
+                              155
+                            ],
+                            "children": [
+                              {
+                                "ref": "f0e2",
+                                "role": "table",
+                                "name": null,
+                                "value": null,
+                                "states": [],
+                                "box": [
+                                  452,
+                                  10,
+                                  376,
+                                  46
+                                ],
+                                "children": [
+                                  {
+                                    "ref": "f0e1",
+                                    "role": "row",
+                                    "name": null,
+                                    "value": null,
+                                    "states": [],
+                                    "box": [
+                                      452,
+                                      10,
+                                      376,
+                                      46
+                                    ],
+                                    "children": [
+                                      {
+                                        "ref": "f0e0",
+                                        "role": "cell",
+                                        "name": "Northgate Federal Credit Union — Sign On",
+                                        "value": null,
+                                        "states": [],
+                                        "box": [
+                                          452,
+                                          10,
+                                          376,
+                                          46
+                                        ],
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "ref": "f0e20",
+                                "role": "form",
+                                "name": null,
+                                "value": null,
+                                "states": [],
+                                "box": [
+                                  452,
+                                  56,
+                                  376,
+                                  93
+                                ],
+                                "children": [
+                                  {
+                                    "ref": "f0e19",
+                                    "role": "table",
+                                    "name": null,
+                                    "value": null,
+                                    "states": [],
+                                    "box": [
+                                      452,
+                                      56,
+                                      259,
+                                      93
+                                    ],
+                                    "children": [
+                                      {
+                                        "ref": "f0e18",
+                                        "role": "row",
+                                        "name": null,
+                                        "value": null,
+                                        "states": [],
+                                        "box": [
+                                          452,
+                                          56,
+                                          259,
+                                          93
+                                        ],
+                                        "children": [
+                                          {
+                                            "ref": "f0e17",
+                                            "role": "cell",
+                                            "name": "Operator ID Password",
+                                            "value": null,
+                                            "states": [],
+                                            "box": [
+                                              452,
+                                              56,
+                                              259,
+                                              93
+                                            ],
+                                            "children": [
+                                              {
+                                                "ref": "f0e16",
+                                                "role": "table",
+                                                "name": null,
+                                                "value": null,
+                                                "states": [],
+                                                "box": [
+                                                  458,
+                                                  62,
+                                                  247,
+                                                  81
+                                                ],
+                                                "children": [
+                                                  {
+                                                    "ref": "f0e7",
+                                                    "role": "row",
+                                                    "name": null,
+                                                    "value": null,
+                                                    "states": [],
+                                                    "box": [
+                                                      458,
+                                                      62,
+                                                      247,
+                                                      27
+                                                    ],
+                                                    "children": [
+                                                      {
+                                                        "ref": "f0e4",
+                                                        "role": "cell",
+                                                        "name": "Operator ID",
+                                                        "value": null,
+                                                        "states": [],
+                                                        "box": [
+                                                          458,
+                                                          62,
+                                                          102,
+                                                          27
+                                                        ],
+                                                        "children": [
+                                                          {
+                                                            "ref": "f0e3",
+                                                            "role": "label",
+                                                            "name": "Operator ID",
+                                                            "value": null,
+                                                            "states": [],
+                                                            "box": [
+                                                              461,
+                                                              66,
+                                                              96,
+                                                              19
+                                                            ],
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "ref": "f0e6",
+                                                        "role": "cell",
+                                                        "name": null,
+                                                        "value": null,
+                                                        "states": [],
+                                                        "box": [
+                                                          560,
+                                                          62,
+                                                          145,
+                                                          27
+                                                        ],
+                                                        "children": [
+                                                          {
+                                                            "ref": "f0e5",
+                                                            "role": "textbox",
+                                                            "name": "Operator ID",
+                                                            "value": null,
+                                                            "states": [],
+                                                            "box": [
+                                                              563,
+                                                              65,
+                                                              139,
+                                                              21
+                                                            ],
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "ref": "f0e12",
+                                                    "role": "row",
+                                                    "name": null,
+                                                    "value": null,
+                                                    "states": [],
+                                                    "box": [
+                                                      458,
+                                                      89,
+                                                      247,
+                                                      27
+                                                    ],
+                                                    "children": [
+                                                      {
+                                                        "ref": "f0e9",
+                                                        "role": "cell",
+                                                        "name": "Password",
+                                                        "value": null,
+                                                        "states": [],
+                                                        "box": [
+                                                          458,
+                                                          89,
+                                                          102,
+                                                          27
+                                                        ],
+                                                        "children": [
+                                                          {
+                                                            "ref": "f0e8",
+                                                            "role": "label",
+                                                            "name": "Password",
+                                                            "value": null,
+                                                            "states": [],
+                                                            "box": [
+                                                              461,
+                                                              93,
+                                                              75,
+                                                              19
+                                                            ],
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "ref": "f0e11",
+                                                        "role": "cell",
+                                                        "name": null,
+                                                        "value": null,
+                                                        "states": [],
+                                                        "box": [
+                                                          560,
+                                                          89,
+                                                          145,
+                                                          27
+                                                        ],
+                                                        "children": [
+                                                          {
+                                                            "ref": "f0e10",
+                                                            "role": "textbox",
+                                                            "name": "Password",
+                                                            "value": null,
+                                                            "states": [],
+                                                            "box": [
+                                                              563,
+                                                              92,
+                                                              139,
+                                                              21
+                                                            ],
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "ref": "f0e15",
+                                                    "role": "row",
+                                                    "name": null,
+                                                    "value": null,
+                                                    "states": [],
+                                                    "box": [
+                                                      458,
+                                                      116,
+                                                      247,
+                                                      27
+                                                    ],
+                                                    "children": [
+                                                      {
+                                                        "ref": "f0e14",
+                                                        "role": "cell",
+                                                        "name": null,
+                                                        "value": null,
+                                                        "states": [],
+                                                        "box": [
+                                                          458,
+                                                          116,
+                                                          247,
+                                                          27
+                                                        ],
+                                                        "children": [
+                                                          {
+                                                            "ref": "f0e13",
+                                                            "role": "button",
+                                                            "name": "Sign On",
+                                                            "value": "Sign On",
+                                                            "states": [],
+                                                            "box": [
+                                                              638,
+                                                              119,
+                                                              64,
+                                                              21
+                                                            ],
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "digest": "37dc21da4a7e8666",
+  "screenshotRef": null,
+  "truncated": false
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "entity": "SCREEN_FINANCIAL",
+    "classification": "financial",
+    "confidence": 0.85,
+    "sink": "screenshot",
+    "count": 2
+  }
+]

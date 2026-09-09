@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      The console is deliberately one page with no build step and no framework.
+      What is being demonstrated here is a control-transfer mechanism, and a
+      toolchain in front of it would only make the interesting 200 lines harder
+      to read. The brief allows the operator UI to be mocked; the mechanism
+      underneath it is not.
+    -->
+    <title>Operator console — takeover</title>
+    <link rel="stylesheet" href="/console.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Operator console</h1>
+      <p id="lease" class="lease">connecting…</p>
+    </header>
+
+    <main>
+      <section class="brief">
+        <h2>Why you were called</h2>
+        <dl id="brief">
+          <dt>Reason</dt><dd id="reason">—</dd>
+          <dt>Capability</dt><dd id="capability">—</dd>
+          <dt>Step</dt><dd id="step">—</dd>
+          <dt>What happened</dt><dd id="explanation">—</dd>
+          <dt>Resumes from</dt><dd id="resume-from">—</dd>
+          <dt>Evidence</dt><dd id="evidence">—</dd>
+        </dl>
+
+        <div class="controls">
+          <label for="operator">Your operator id</label>
+          <input id="operator" type="text" value="operator-1" autocomplete="off" />
+          <button id="claim" type="button">Take control</button>
+        </div>
+
+        <div class="controls" id="handback-controls" hidden>
+          <label for="note">Note for the audit record</label>
+          <input id="note" type="text" placeholder="what you did and why" autocomplete="off" />
+          <button id="resume" type="button">Hand back &amp; resume</button>
+          <button id="done" type="button">I finished it by hand</button>
+          <button id="abort" type="button" class="danger">Abort the run</button>
+        </div>
+
+        <p class="note">
+          This link is a credential: it grants keyboard and mouse control of a
+          session that is already signed in. It is signed and it expires.
+        </p>
+
+        <p id="inputs" class="note">No inputs recorded yet.</p>
+      </section>
+
+      <section class="screen">
+        <!--
+          The canvas is view-only until the lease is held. That is enforced on
+          the server for real; the class here only stops the operator wondering
+          why their clicks do nothing.
+        -->
+        <canvas id="screen" width="1280" height="800" tabindex="0"></canvas>
+        <p id="status" class="status">view only — nobody has taken control</p>
+      </section>
+    </main>
+
+    <script type="module" src="/console.js"></script>
+  </body>
+</html>

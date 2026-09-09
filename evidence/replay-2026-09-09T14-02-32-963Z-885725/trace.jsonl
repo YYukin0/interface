@@ -1,0 +1,17 @@
+{"event":"run_started","at":"2026-09-09T14:02:32.963Z","manifest":{"runId":"replay-2026-09-09T14-02-32-963Z-885725","kind":"replay","startedAt":"2026-09-09T14:02:32.963Z","endedAt":null,"capabilityId":"member.read_savings_balance","goal":null,"target":"http://localhost:8080/admin/index.htm","model":null,"schemaVersion":"1.0.0","gitSha":null}}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:32.966Z","action":"navigate","decision":{"kind":"allow"}}
+{"event":"observed","at":"2026-09-09T14:02:33.017Z","location":"http://localhost:8080/admin/index.htm","digest":"dee4fa4e97f5f9ad","nodeCount":35,"truncated":false,"screenshotRef":"screenshots/step-01-s1-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.017Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.021Z","stepId":"s1","status":"unique","matchedBy":"role-name","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:33.057Z","stepId":"s1","action":"click","ok":true,"durationMs":36}
+{"event":"checkpoint_evaluated","at":"2026-09-09T14:02:33.085Z","checkpointId":"chk.member_id","passed":true,"expected":"textbox:Member ID","observed":"found textbox:Member ID","waitedMs":27}
+{"event":"observed","at":"2026-09-09T14:02:33.115Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-02-s2-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.115Z","action":"type","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.117Z","stepId":"s2","status":"unique","matchedBy":"automation-id","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:33.129Z","stepId":"s2","action":"type","ok":true,"durationMs":12}
+{"event":"observed","at":"2026-09-09T14:02:33.165Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-03-s3-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.165Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.166Z","stepId":"s3","status":"unique","matchedBy":"label-text","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:33.210Z","stepId":"s3","action":"click","ok":true,"durationMs":44}
+{"event":"business_outcome","at":"2026-09-09T14:02:33.226Z","code":"PERMISSION_DENIED","message":"The signed-on operator profile is not entitled to view this member's accounts. Retrying will not help; the operator needs the CIF-VIEW-EXEC entitlement."}
+{"event":"run_finished","at":"2026-09-09T14:02:33.226Z","outcome":"outcome","durationMs":261}

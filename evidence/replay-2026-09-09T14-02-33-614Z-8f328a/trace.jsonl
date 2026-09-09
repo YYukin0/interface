@@ -1,0 +1,24 @@
+{"event":"run_started","at":"2026-09-09T14:02:33.614Z","manifest":{"runId":"replay-2026-09-09T14-02-33-614Z-8f328a","kind":"replay","startedAt":"2026-09-09T14:02:33.614Z","endedAt":null,"capabilityId":"member.read_savings_balance","goal":null,"target":"http://localhost:8080/admin/index.htm","model":null,"schemaVersion":"1.0.0","gitSha":null}}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.617Z","action":"navigate","decision":{"kind":"allow"}}
+{"event":"observed","at":"2026-09-09T14:02:33.667Z","location":"http://localhost:8080/admin/index.htm","digest":"dee4fa4e97f5f9ad","nodeCount":35,"truncated":false,"screenshotRef":"screenshots/step-01-s1-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.668Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.671Z","stepId":"s1","status":"unique","matchedBy":"role-name","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:33.707Z","stepId":"s1","action":"click","ok":true,"durationMs":36}
+{"event":"checkpoint_evaluated","at":"2026-09-09T14:02:33.736Z","checkpointId":"chk.member_id","passed":true,"expected":"textbox:Member ID","observed":"found textbox:Member ID","waitedMs":28}
+{"event":"observed","at":"2026-09-09T14:02:33.765Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-02-s2-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.765Z","action":"type","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.767Z","stepId":"s2","status":"unique","matchedBy":"automation-id","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:33.780Z","stepId":"s2","action":"type","ok":true,"durationMs":13}
+{"event":"observed","at":"2026-09-09T14:02:33.815Z","location":"http://localhost:8080/admin/index.htm","digest":"2d8d32f53b7d078d","nodeCount":50,"truncated":false,"screenshotRef":"screenshots/step-03-s3-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:33.815Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:33.816Z","stepId":"s3","status":"unique","matchedBy":"label-text","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:34.163Z","stepId":"s3","action":"click","ok":true,"durationMs":347}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:34.165Z","action":"dismiss_dialog","decision":{"kind":"allow"}}
+{"event":"recovery_attempted","at":"2026-09-09T14:02:34.167Z","stepId":"s3","condition":"unexpected_dialog","took":"dismiss_dialog","attempt":1,"succeeded":true}
+{"event":"checkpoint_evaluated","at":"2026-09-09T14:02:34.217Z","checkpointId":"chk.member_information","passed":true,"expected":"Member Information","observed":"text present","waitedMs":49}
+{"event":"redacted","at":"2026-09-09T14:02:34.264Z","record":{"entity":"SCREEN_FINANCIAL","classification":"financial","confidence":0.85,"sink":"screenshot","count":2}}
+{"event":"observed","at":"2026-09-09T14:02:34.265Z","location":"http://localhost:8080/admin/index.htm","digest":"ace3fffb930c1a76","nodeCount":54,"truncated":false,"screenshotRef":"screenshots/step-04-s4-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T14:02:34.265Z","action":"extract","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T14:02:34.266Z","stepId":"s4","status":"unique","matchedBy":"container-scoped-text","agreement":1}
+{"event":"acted","at":"2026-09-09T14:02:34.270Z","stepId":"s4","action":"extract","ok":true,"durationMs":4}
+{"event":"run_finished","at":"2026-09-09T14:02:34.287Z","outcome":"success","durationMs":671}

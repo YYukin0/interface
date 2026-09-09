@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "references": [
+    { "path": "../contracts" },
+    { "path": "../evidence" },
+    { "path": "../policy" },
+    { "path": "../redact" }
+  ],
+  "include": ["src/**/*.ts"]
+}

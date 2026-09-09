@@ -1,0 +1,17 @@
+# Only the target application is containerised. The automation stays on the
+# host: it needs a browser it can attach to over CDP for the operator handoff,
+# and putting that inside a container would buy nothing but a port-forward.
+services:
+  legacy-app:
+    build: ./apps/legacy-app
+    container_name: cua-legacy-app
+    ports:
+      - "8080:8080"
+    environment:
+      # Same defaults the app falls back to; listed here so the credential
+      # surface is visible in one place rather than buried in the image.
+      CUA_APP_USERNAME: "${CUA_APP_USERNAME:-teller01}"
+      CUA_APP_PASSWORD: "${CUA_APP_PASSWORD:-letmein}"
+      # Shorten the slow-load fault when you are iterating rather than demoing.
+      CUA_SLOW_LOAD_MS: "${CUA_SLOW_LOAD_MS:-6000}"
+    restart: unless-stopped

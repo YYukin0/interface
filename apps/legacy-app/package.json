@@ -1,0 +1,14 @@
+{
+  "name": "@cua/legacy-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deliberately hostile 2003-era credit union admin console. The automation target.",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

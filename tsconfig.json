@@ -1,0 +1,32 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/contracts"
+    },
+    {
+      "path": "packages/policy"
+    },
+    {
+      "path": "packages/redact"
+    },
+    {
+      "path": "packages/evidence"
+    },
+    {
+      "path": "packages/surface-web"
+    },
+    {
+      "path": "packages/discovery"
+    },
+    {
+      "path": "packages/compiler"
+    },
+    {
+      "path": "packages/replay"
+    },
+    {
+      "path": "packages/handoff"
+    }
+  ]
+}

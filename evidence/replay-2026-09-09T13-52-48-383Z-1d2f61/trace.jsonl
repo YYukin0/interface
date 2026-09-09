@@ -1,0 +1,8 @@
+{"event":"run_started","at":"2026-09-09T13:52:48.383Z","manifest":{"runId":"replay-2026-09-09T13-52-48-383Z-1d2f61","kind":"replay","startedAt":"2026-09-09T13:52:48.383Z","endedAt":null,"capabilityId":"member.read_savings_balance","goal":null,"target":"http://localhost:8080/admin/index.htm","model":null,"schemaVersion":"1.0.0","gitSha":null}}
+{"event":"policy_evaluated","at":"2026-09-09T13:52:48.386Z","action":"navigate","decision":{"kind":"allow"}}
+{"event":"observed","at":"2026-09-09T13:52:48.434Z","location":"http://localhost:8080/admin/index.htm","digest":"dee4fa4e97f5f9ad","nodeCount":35,"truncated":false,"screenshotRef":"screenshots/step-01-s1-observation.png"}
+{"event":"policy_evaluated","at":"2026-09-09T13:52:48.435Z","action":"click","decision":{"kind":"allow"}}
+{"event":"resolved","at":"2026-09-09T13:52:54.619Z","stepId":"s1","status":"not_found","matchedBy":null,"agreement":0}
+{"event":"control_transferred","at":"2026-09-09T13:52:54.633Z","from":"automation","to":"none","reason":"locator_unresolved"}
+{"event":"escalated","at":"2026-09-09T13:52:54.639Z","interventionId":"iv-replay-2026-09-09T13-52-48-383Z-1d2f61","reason":"locator_unresolved"}
+{"event":"run_finished","at":"2026-09-09T13:52:54.639Z","outcome":"escalated","durationMs":6254}

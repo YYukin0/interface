@@ -1,0 +1,508 @@
+{
+  "at": "2026-09-09T13:52:54.618Z",
+  "surface": "legacy-web",
+  "location": "http://localhost:8080/admin/index.htm",
+  "title": "Northgate Federal Credit Union Core Admin",
+  "root": {
+    "ref": "f0e-root",
+    "role": "document",
+    "name": null,
+    "value": null,
+    "states": [],
+    "box": null,
+    "children": [
+      {
+        "ref": "f1e-root",
+        "role": "frame",
+        "name": "nav",
+        "value": null,
+        "states": [],
+        "box": null,
+        "children": [
+          {
+            "ref": "f1e2",
+            "role": "table",
+            "name": null,
+            "value": null,
+            "states": [],
+            "box": [
+              0,
+              0,
+              180,
+              21
+            ],
+            "children": [
+              {
+                "ref": "f1e1",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  0,
+                  180,
+                  21
+                ],
+                "children": [
+                  {
+                    "ref": "f1e0",
+                    "role": "cell",
+                    "name": "Main Menu",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      0,
+                      180,
+                      21
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "ref": "f1e18",
+            "role": "table",
+            "name": null,
+            "value": null,
+            "states": [],
+            "box": [
+              0,
+              21,
+              180,
+              95
+            ],
+            "children": [
+              {
+                "ref": "f1e5",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  21,
+                  180,
+                  19
+                ],
+                "children": [
+                  {
+                    "ref": "f1e4",
+                    "role": "cell",
+                    "name": "Member Search",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      21,
+                      180,
+                      19
+                    ],
+                    "children": [
+                      {
+                        "ref": "f1e3",
+                        "role": "link",
+                        "name": "Member Search",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          6,
+                          24,
+                          87,
+                          13
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "f1e8",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  40,
+                  180,
+                  19
+                ],
+                "children": [
+                  {
+                    "ref": "f1e7",
+                    "role": "cell",
+                    "name": "Teller Batch",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      40,
+                      180,
+                      19
+                    ],
+                    "children": [
+                      {
+                        "ref": "f1e6",
+                        "role": "link",
+                        "name": "Teller Batch",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          6,
+                          43,
+                          64,
+                          13
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "f1e11",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  59,
+                  180,
+                  19
+                ],
+                "children": [
+                  {
+                    "ref": "f1e10",
+                    "role": "cell",
+                    "name": "Reports",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      59,
+                      180,
+                      19
+                    ],
+                    "children": [
+                      {
+                        "ref": "f1e9",
+                        "role": "link",
+                        "name": "Reports",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          6,
+                          62,
+                          42,
+                          13
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "f1e14",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  78,
+                  180,
+                  19
+                ],
+                "children": [
+                  {
+                    "ref": "f1e13",
+                    "role": "cell",
+                    "name": "Card Services",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      78,
+                      180,
+                      19
+                    ],
+                    "children": [
+                      {
+                        "ref": "f1e12",
+                        "role": "link",
+                        "name": "Card Services",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          6,
+                          81,
+                          76,
+                          13
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "f1e17",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  0,
+                  97,
+                  180,
+                  19
+                ],
+                "children": [
+                  {
+                    "ref": "f1e16",
+                    "role": "cell",
+                    "name": "Sign Off",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      0,
+                      97,
+                      180,
+                      19
+                    ],
+                    "children": [
+                      {
+                        "ref": "f1e15",
+                        "role": "link",
+                        "name": "Sign Off",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          6,
+                          100,
+                          45,
+                          13
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ref": "f2e-root",
+        "role": "frame",
+        "name": "content",
+        "value": null,
+        "states": [],
+        "box": null,
+        "children": [
+          {
+            "ref": "f2e2",
+            "role": "table",
+            "name": null,
+            "value": null,
+            "states": [],
+            "box": [
+              181,
+              0,
+              1099,
+              23
+            ],
+            "children": [
+              {
+                "ref": "f2e1",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  181,
+                  0,
+                  1099,
+                  23
+                ],
+                "children": [
+                  {
+                    "ref": "f2e0",
+                    "role": "cell",
+                    "name": "Northgate Federal Credit Union — Core Admin 9.4",
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      181,
+                      0,
+                      1099,
+                      23
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "ref": "f2e12",
+            "role": "table",
+            "name": null,
+            "value": null,
+            "states": [],
+            "box": [
+              181,
+              23,
+              1099,
+              105
+            ],
+            "children": [
+              {
+                "ref": "f2e11",
+                "role": "row",
+                "name": null,
+                "value": null,
+                "states": [],
+                "box": [
+                  181,
+                  23,
+                  1099,
+                  105
+                ],
+                "children": [
+                  {
+                    "ref": "f2e10",
+                    "role": "cell",
+                    "name": null,
+                    "value": null,
+                    "states": [],
+                    "box": [
+                      181,
+                      23,
+                      1099,
+                      105
+                    ],
+                    "children": [
+                      {
+                        "ref": "f2e3",
+                        "role": "text",
+                        "name": "Notices",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          189,
+                          31,
+                          1083,
+                          17
+                        ],
+                        "children": []
+                      },
+                      {
+                        "ref": "f2e8",
+                        "role": "table",
+                        "name": null,
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          189,
+                          48,
+                          480,
+                          41
+                        ],
+                        "children": [
+                          {
+                            "ref": "f2e5",
+                            "role": "row",
+                            "name": null,
+                            "value": null,
+                            "states": [],
+                            "box": [
+                              190,
+                              49,
+                              479,
+                              20
+                            ],
+                            "children": [
+                              {
+                                "ref": "f2e4",
+                                "role": "cell",
+                                "name": "Nightly posting completed 03:12. No exceptions.",
+                                "value": null,
+                                "states": [],
+                                "box": [
+                                  190,
+                                  49,
+                                  479,
+                                  20
+                                ],
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "ref": "f2e7",
+                            "role": "row",
+                            "name": null,
+                            "value": null,
+                            "states": [],
+                            "box": [
+                              190,
+                              69,
+                              479,
+                              20
+                            ],
+                            "children": [
+                              {
+                                "ref": "f2e6",
+                                "role": "cell",
+                                "name": "Reminder: dormancy fees assess on the last business day.",
+                                "value": null,
+                                "states": [],
+                                "box": [
+                                  190,
+                                  69,
+                                  479,
+                                  20
+                                ],
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "ref": "f2e9",
+                        "role": "text",
+                        "name": "Select a function from the menu at left.",
+                        "value": null,
+                        "states": [],
+                        "box": [
+                          189,
+                          108,
+                          200,
+                          12
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "digest": "dee4fa4e97f5f9ad",
+  "screenshotRef": null,
+  "truncated": false
+}

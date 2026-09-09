@@ -1,0 +1,12 @@
+{
+  "runId": "replay-2026-09-09T14-02-31-592Z-27aeba",
+  "kind": "replay",
+  "startedAt": "2026-09-09T14:02:31.592Z",
+  "endedAt": "2026-09-09T14:02:31.939Z",
+  "capabilityId": "member.read_savings_balance",
+  "goal": null,
+  "target": "http://localhost:8080/admin/index.htm",
+  "model": null,
+  "schemaVersion": "1.0.0",
+  "gitSha": null
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "entity": "SUPPLIED_IDENTIFIER",
+    "classification": "identifier",
+    "confidence": 1,
+    "sink": "prompt",
+    "count": 10
+  },
+  {
+    "entity": "MONEY",
+    "classification": "financial",
+    "confidence": 0.8,
+    "sink": "prompt",
+    "count": 6
+  },
+  {
+    "entity": "PERSON_NAME",
+    "classification": "pii",
+    "confidence": 0.6,
+    "sink": "prompt",
+    "count": 3
+  }
+]

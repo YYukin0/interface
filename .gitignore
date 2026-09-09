@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Reference clones and downloaded papers. Read locally, never committed:
+# 200MB+ of third-party code with its own licences.
+research/
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+
+# The assignment brief itself. It is interface.ai's document, not ours, and this
+# repository is public — republishing somebody else's take-home prompt is their
+# call to make, not mine. Kept locally; referenced in README and REPORT instead.
+Assignment A — Computer-Use Automation System.pdf

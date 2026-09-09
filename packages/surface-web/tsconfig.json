@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    // The only package that gets DOM types. The perception layer runs inside
+    // the page, and the seam (I6) exists precisely so that this stays local.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "references": [
+    { "path": "../contracts" },
+    { "path": "../redact" }
+  ],
+  "include": ["src/**/*.ts"]
+}

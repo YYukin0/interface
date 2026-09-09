@@ -1,0 +1,40 @@
+{
+  "name": "@cua/replay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --dry",
+    "test": "tsc -b ../surface-web/tsconfig.json && npm run build && node --test \"test/*.test.mjs\""
+  },
+  "//dependencies": [
+    "I1, stated as a dependency list: there is no model SDK here and there is no",
+    "path to one. @cua/discovery is the package that imports Anthropic's SDK, and",
+    "it is absent from this object — so a replay that consulted a model would not",
+    "compile, rather than merely being against the rules.",
+    "The browser driver is likewise absent: this engine speaks only SurfaceDriver.",
+    "@cua/surface-web appears below as a devDependency because the integration",
+    "test drives a real browser, and its tsconfig is built explicitly in `test`",
+    "because it is not a project reference of this package."
+  ],
+  "dependencies": {
+    "@cua/contracts": "*",
+    "@cua/evidence": "*",
+    "@cua/policy": "*",
+    "@cua/redact": "*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cua/surface-web": "*",
+    "typescript": "^5.6.3"
+  }
+}

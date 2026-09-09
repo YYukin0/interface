@@ -1,0 +1,169 @@
+/* Plain, legible, and deliberately not much. The mechanism is the deliverable. */
+
+:root {
+  --ink: #16181d;
+  --dim: #5b6472;
+  --line: #d6dae1;
+  --paper: #f6f7f9;
+  --live: #0a7d32;
+  --held: #9a5b00;
+  --stop: #a11b1b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* `.controls` below sets `display: flex`, which outranks the user agent's
+   `[hidden] { display: none }` — so the hand-back buttons stayed on screen while
+   nobody held the lease. Cosmetic in the sense that the server refuses those
+   posts anyway, and not cosmetic in the sense that a console offering an
+   operator a button that answers 409 is a console teaching them to ignore it. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+
+.lease {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: var(--dim);
+}
+
+.lease.operator { color: var(--live); font-weight: 600; }
+.lease.automation { color: var(--held); }
+.lease.none { color: var(--stop); }
+
+main {
+  display: grid;
+  grid-template-columns: minmax(320px, 26rem) 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  align-items: start;
+}
+
+.brief {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.35rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+dt {
+  color: var(--dim);
+  font-size: 0.8rem;
+}
+
+dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.controls label {
+  width: 100%;
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+input[type="text"] {
+  flex: 1 1 10rem;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) { background: var(--paper); }
+button:disabled { opacity: 0.45; cursor: default; }
+button.danger { color: var(--stop); border-color: #e2b7b7; }
+
+.note {
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+  color: var(--dim);
+}
+
+.screen canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  /* View-only until the lease is held, and it should look it. */
+  filter: grayscale(0.35) opacity(0.75);
+  cursor: not-allowed;
+}
+
+.screen canvas.live {
+  filter: none;
+  cursor: crosshair;
+  border-color: var(--live);
+  box-shadow: 0 0 0 2px rgba(10, 125, 50, 0.18);
+}
+
+.screen canvas:focus { outline: none; }
+
+.status {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--dim);
+}
+
+.status.error { color: var(--stop); }
+.status.stale::after { content: " (stream disconnected)"; }

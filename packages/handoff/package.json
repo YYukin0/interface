@@ -1,0 +1,35 @@
+{
+  "name": "@cua/handoff",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --dry",
+    "test": "npm run build && node --test \"test/*.test.mjs\""
+  },
+  "//dependencies": [
+    "No WebSocket library, and no model SDK. The console is Server-Sent Events",
+    "out and POST in, both of which node:http already has — see server.ts for",
+    "why that shape fits this traffic better than a duplex socket.",
+    "@cua/surface-web is absent too: this package speaks the LiveViewSource port",
+    "from @cua/contracts, so a desktop implementation drops in without touching",
+    "anything here (I6)."
+  ],
+  "dependencies": {
+    "@cua/contracts": "*",
+    "@cua/redact": "*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

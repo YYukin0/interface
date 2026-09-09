@@ -1,0 +1,30 @@
+{
+  "name": "@cua/discovery",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json --dry",
+    "test": "npm run build && node --test --test-concurrency=1 \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.0",
+    "@cua/contracts": "*",
+    "@cua/evidence": "*",
+    "@cua/policy": "*",
+    "@cua/redact": "*"
+  },
+  "devDependencies": {
+    "@cua/surface-web": "*",
+    "typescript": "^5.6.3"
+  }
+}

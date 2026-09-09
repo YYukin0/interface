@@ -1,0 +1,27 @@
+{
+  "name": "cua-automation-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc -b tsconfig.json --dry",
+    "build": "tsc -b tsconfig.json",
+    "test": "npm run test --workspaces --if-present",
+    "app": "node apps/legacy-app/src/server.mjs",
+    "discover": "npm run build && node scripts/discover.mjs",
+    "compile": "npm run build && node scripts/compile.mjs",
+    "replay": "npm run build && node scripts/replay.mjs",
+    "validate": "npm run build && node packages/contracts/scripts/validate-examples.mjs packages/contracts/examples capabilities"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,416 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "member.read_savings_balance",
+  "version": "1.0.0",
+  "displayName": "Read the current balance of a member's savings account",
+  "description": "Read the current balance of a member's savings account. Call it with `memberId`.",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "memberId": {
+        "type": "string",
+        "pattern": "^[0-9]{5}$",
+        "description": "the five digit member number to look up"
+      }
+    },
+    "required": [
+      "memberId"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "savingsBalance": {
+        "type": "string",
+        "format": "money",
+        "description": "Value read from the screen during discovery, as money (savingsBalance)."
+      }
+    },
+    "additionalProperties": false
+  },
+  "sensitivity": {
+    "memberId": "identifier",
+    "savingsBalance": "financial"
+  },
+  "businessOutcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "description": "No member exists with the supplied ID. This is an answer, not a failure: the caller asked whether the member has a savings balance and the system replied that there is no such member.",
+      "detect": {
+        "id": "chk.no_results",
+        "assert": "text-present",
+        "target": null,
+        "value": "No records matched your search",
+        "timeoutMs": 5000
+      },
+      "retryable": true
+    },
+    {
+      "code": "PERMISSION_DENIED",
+      "description": "The signed-on operator profile is not entitled to view this member's accounts. Retrying will not help; the operator needs the CIF-VIEW-EXEC entitlement.",
+      "detect": {
+        "id": "chk.denied_banner",
+        "assert": "text-present",
+        "target": null,
+        "value": "You are not authorized to view this record",
+        "timeoutMs": 5000
+      },
+      "retryable": false
+    }
+  ],
+  "surface": {
+    "kind": "legacy-web",
+    "app": "northgate-core-admin",
+    "appVersion": null,
+    "entryPoint": "/admin/index.htm"
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "intent": "Member Search is the natural starting point to look up a member by their member number.",
+      "action": {
+        "type": "click"
+      },
+      "target": {
+        "frame": [
+          "nav"
+        ],
+        "containerHint": null,
+        "positionHint": "link labelled \"Member Search\"",
+        "expectedRole": "link",
+        "expectedName": "Member Search",
+        "candidates": [
+          {
+            "strategy": "role-name",
+            "value": "link:Member Search",
+            "confidence": 0.85,
+            "note": "accessible role and name"
+          },
+          {
+            "strategy": "css",
+            "value": "a[href=\"/admin/search.htm\"]",
+            "confidence": 0.45,
+            "note": "LEGACY: encodes structure that changes cosmetically"
+          },
+          {
+            "strategy": "robula-xpath",
+            "value": "//a[@href=\"/admin/search.htm\"]",
+            "confidence": 0.4,
+            "note": "LEGACY: ROBULA+-style, attribute predicates preferred over position"
+          },
+          {
+            "strategy": "structural-path",
+            "value": "table[2]/row[1]/cell[1]/link[1]",
+            "confidence": 0.3,
+            "note": "position in the accessibility tree; breaks on any inserted sibling"
+          },
+          {
+            "strategy": "viewport-coords",
+            "value": "0.2738,0.0381",
+            "confidence": 0.15,
+            "note": "last resort; only meaningful because the viewport is pinned"
+          }
+        ]
+      },
+      "risk": "safe",
+      "checkpoint": {
+        "id": "chk.member_id",
+        "assert": "role-name-present",
+        "target": null,
+        "value": "textbox:Member ID",
+        "timeoutMs": 10000
+      },
+      "recover": [
+        {
+          "on": "transient_load",
+          "do": "wait_retry",
+          "maxAttempts": 2
+        },
+        {
+          "on": "unexpected_dialog",
+          "do": "dismiss_dialog",
+          "maxAttempts": 1
+        }
+      ],
+      "timeoutMs": 15000,
+      "optional": false
+    },
+    {
+      "id": "s2",
+      "intent": "Enter the member number parameter into the Member ID field to search for the member.",
+      "action": {
+        "type": "type",
+        "value": {
+          "from": "input",
+          "ref": "$.inputs.memberId"
+        },
+        "clearFirst": true
+      },
+      "target": {
+        "frame": [
+          "content"
+        ],
+        "containerHint": "Search Criteria",
+        "positionHint": "textbox labelled \"Member ID\"",
+        "expectedRole": "textbox",
+        "expectedName": "Member ID",
+        "candidates": [
+          {
+            "strategy": "automation-id",
+            "value": "txtMemberId",
+            "confidence": 0.95,
+            "note": "id or name attribute; the closest thing to a developer-supplied handle"
+          },
+          {
+            "strategy": "label-text",
+            "value": "Member ID",
+            "confidence": 0.85,
+            "note": "the text that labels this control, via <label for> or table adjacency"
+          },
+          {
+            "strategy": "role-name",
+            "value": "textbox:Member ID",
+            "confidence": 0.85,
+            "note": "accessible role and name"
+          },
+          {
+            "strategy": "container-scoped-text",
+            "value": "Search Criteria >> Member ID",
+            "confidence": 0.75,
+            "note": "text within a named container"
+          },
+          {
+            "strategy": "css",
+            "value": "#txtMemberId",
+            "confidence": 0.45,
+            "note": "LEGACY: encodes structure that changes cosmetically"
+          },
+          {
+            "strategy": "robula-xpath",
+            "value": "//input[@id=\"txtMemberId\"]",
+            "confidence": 0.4,
+            "note": "LEGACY: ROBULA+-style, attribute predicates preferred over position"
+          },
+          {
+            "strategy": "structural-path",
+            "value": "table[2]/row[1]/cell[1]/form[1]/table[1]/row[1]/cell[2]/textbox[1]",
+            "confidence": 0.3,
+            "note": "position in the accessibility tree; breaks on any inserted sibling"
+          },
+          {
+            "strategy": "viewport-coords",
+            "value": "0.1852,0.0781",
+            "confidence": 0.15,
+            "note": "last resort; only meaningful because the viewport is pinned"
+          }
+        ]
+      },
+      "risk": "safe",
+      "checkpoint": null,
+      "recover": [],
+      "timeoutMs": 15000,
+      "optional": false
+    },
+    {
+      "id": "s3",
+      "intent": "The member number is entered; submit the search to find the member.",
+      "action": {
+        "type": "click"
+      },
+      "target": {
+        "frame": [
+          "content"
+        ],
+        "containerHint": "Search Criteria",
+        "positionHint": "button labelled \"Search\"",
+        "expectedRole": "button",
+        "expectedName": "Search",
+        "candidates": [
+          {
+            "strategy": "label-text",
+            "value": "Search",
+            "confidence": 0.85,
+            "note": "the text that labels this control, via <label for> or table adjacency"
+          },
+          {
+            "strategy": "role-name",
+            "value": "button:Search",
+            "confidence": 0.85,
+            "note": "accessible role and name"
+          },
+          {
+            "strategy": "container-scoped-text",
+            "value": "Search Criteria >> Search",
+            "confidence": 0.75,
+            "note": "text within a named container"
+          },
+          {
+            "strategy": "text",
+            "value": "Search",
+            "confidence": 0.6,
+            "note": "unique visible text at capture time"
+          },
+          {
+            "strategy": "css",
+            "value": "input[value=\"Search\"]",
+            "confidence": 0.45,
+            "note": "LEGACY: encodes structure that changes cosmetically"
+          },
+          {
+            "strategy": "robula-xpath",
+            "value": "//input[@value=\"Search\"]",
+            "confidence": 0.4,
+            "note": "LEGACY: ROBULA+-style, attribute predicates preferred over position"
+          },
+          {
+            "strategy": "structural-path",
+            "value": "table[2]/row[1]/cell[1]/form[1]/table[1]/row[3]/cell[2]/button[1]",
+            "confidence": 0.3,
+            "note": "position in the accessibility tree; breaks on any inserted sibling"
+          },
+          {
+            "strategy": "viewport-coords",
+            "value": "0.1612,0.1456",
+            "confidence": 0.15,
+            "note": "last resort; only meaningful because the viewport is pinned"
+          }
+        ]
+      },
+      "risk": "safe",
+      "checkpoint": {
+        "id": "chk.member_information",
+        "assert": "text-present",
+        "target": null,
+        "value": "Member Information",
+        "timeoutMs": 10000
+      },
+      "recover": [
+        {
+          "on": "transient_load",
+          "do": "wait_retry",
+          "maxAttempts": 2
+        },
+        {
+          "on": "unexpected_dialog",
+          "do": "dismiss_dialog",
+          "maxAttempts": 1
+        }
+      ],
+      "timeoutMs": 15000,
+      "optional": false
+    },
+    {
+      "id": "s4",
+      "intent": "The member detail page is open; capture the redacted savings account balance as the requested output.",
+      "action": {
+        "type": "extract",
+        "into": "$.outputs.savingsBalance",
+        "as": "money"
+      },
+      "target": {
+        "frame": [
+          "content"
+        ],
+        "containerHint": "Account Summary",
+        "positionHint": "Balance column of the Savings row",
+        "expectedRole": "cell",
+        "expectedName": null,
+        "candidates": [
+          {
+            "strategy": "container-scoped-text",
+            "value": "Account Summary >> row:Savings >> col:Balance",
+            "confidence": 0.9,
+            "note": "addressed by row and column, so an inserted column does not move it"
+          },
+          {
+            "strategy": "robula-xpath",
+            "value": "//table[2]/tbody/tr[2]/td[3]",
+            "confidence": 0.4,
+            "note": "LEGACY: ROBULA+-style, attribute predicates preferred over position"
+          },
+          {
+            "strategy": "structural-path",
+            "value": "table[2]/row[1]/cell[1]/table[2]/row[2]/cell[3]",
+            "confidence": 0.3,
+            "note": "position in the accessibility tree; breaks on any inserted sibling"
+          },
+          {
+            "strategy": "viewport-coords",
+            "value": "0.3254,0.1944",
+            "confidence": 0.15,
+            "note": "last resort; only meaningful because the viewport is pinned"
+          }
+        ]
+      },
+      "risk": "safe",
+      "checkpoint": null,
+      "recover": [],
+      "timeoutMs": 15000,
+      "optional": false
+    }
+  ],
+  "successCondition": {
+    "checkpoints": [
+      "chk.member_id",
+      "chk.member_information"
+    ],
+    "requiredOutputs": [
+      "savingsBalance"
+    ]
+  },
+  "provenance": {
+    "discoveredBy": "k3",
+    "discoveredAt": "2026-09-09T00:18:28.162Z",
+    "traceRef": "evidence/discovery-2026-09-09T00-18-28-162Z-6998d7/trace.jsonl",
+    "compilerVersion": "0.1.0",
+    "humanEdits": [
+      {
+        "at": "2026-09-09T13:04:07.076Z",
+        "by": "yyukin0",
+        "note": "Acted on the compiler's [no_business_outcomes_declared] warning: the discovery run only ever saw member 12345, so it had no way to observe the two states the application treats as answers rather than errors. Declared MEMBER_NOT_FOUND and PERMISSION_DENIED against the screens the fixture renders for them, and added tenant-b's one genuine locator difference. Moved to 'review'."
+      }
+    ]
+  },
+  "approval": {
+    "state": "review",
+    "by": null,
+    "at": null,
+    "observedStability": null
+  },
+  "tenantOverrides": {
+    "tenant-b": {
+      "note": "Same vendor product, rebranded. The nav link reads 'Find Member', and the account summary table gained a Fees column ahead of Balance. Only the first difference needs an override: s4 addresses the cell by row and column rather than by position, so the inserted column does not move it.",
+      "entryPoint": "/tenant-b/admin/index.htm",
+      "steps": {
+        "s1": {
+          "target": {
+            "frame": [
+              "nav"
+            ],
+            "containerHint": null,
+            "positionHint": "link labelled \"Find Member\"",
+            "expectedRole": "link",
+            "expectedName": "Find Member",
+            "candidates": [
+              {
+                "strategy": "role-name",
+                "value": "link:Find Member",
+                "confidence": 0.85,
+                "note": "renamed by this tenant's branding pack"
+              },
+              {
+                "strategy": "css",
+                "value": "a[href=\"/tenant-b/admin/search.htm\"]",
+                "confidence": 0.45,
+                "note": "LEGACY: encodes structure that changes cosmetically"
+              }
+            ]
+          },
+          "timeoutMs": null,
+          "skip": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "iv-replay-2026-09-09T13-52-48-383Z-1d2f61",
+  "createdAt": "2026-09-09T13:52:54.633Z",
+  "runId": "replay-2026-09-09T13-52-48-383Z-1d2f61",
+  "capabilityId": "member.read_savings_balance",
+  "goal": null,
+  "stepId": "s1",
+  "stepIntent": "Member Search is the natural starting point to look up a member by their member number.",
+  "reason": "locator_unresolved",
+  "explanation": "expected a unique link named 'Member Lookup'; 1 locator candidate(s) resolved not_found with agreement 0.00",
+  "screenshotRef": "screenshots/outcome-failure.png",
+  "observationRef": "snapshots/outcome-failure.json",
+  "evidence": {
+    "runId": "replay-2026-09-09T13-52-48-383Z-1d2f61",
+    "path": "evidence/replay-2026-09-09T13-52-48-383Z-1d2f61"
+  },
+  "consoleUrl": "http://127.0.0.1:61017/?t=eyJzZXNzaW9uSWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYWRtaW4vaW5kZXguaHRtIiwiaW50ZXJ2ZW50aW9uSWQiOiJpdi1yZXBsYXktMjAyNi0wOS0wOVQxMy01Mi00OC0zODNaLTFkMmY2MSIsImV4cGlyZXNBdCI6MTc4ODk2Mjg3NDYzM30.an8P5fmY3YIn6WJizpPwWxOcWUPJn7eQj6fk3v5Fh_k",
+  "resumeFrom": null,
+  "status": "resolved"
+}

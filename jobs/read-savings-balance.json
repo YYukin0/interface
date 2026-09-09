@@ -1,0 +1,29 @@
+{
+  "$comment": [
+    "A discovery job: everything about a run that is safe to commit.",
+    "Values for `inputs` are NOT part of this file by design — each input names",
+    "either an inline `value` (fine for the fixture app, whose member ids are",
+    "invented) or a `valueFrom` environment variable (what a real deployment",
+    "uses). See scripts/discover.mjs."
+  ],
+
+  "goal": "Read the current balance of a member's savings account.",
+  "entryUrl": "http://localhost:8080/admin/index.htm",
+  "surface": "legacy-web",
+  "app": "northgate-core-admin",
+  "tenant": "tenant-a",
+  "proposedId": "member.read_savings_balance",
+
+  "inputs": [
+    {
+      "name": "memberId",
+      "description": "the five digit member number to look up",
+      "classification": "identifier",
+      "value": "12345"
+    }
+  ],
+
+  "maxSteps": 14,
+  "deadlineMs": 300000,
+  "allowMutating": false
+}

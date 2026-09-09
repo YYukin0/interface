@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+
+  "allowedOrigins": ["http://localhost:8080"],
+
+  "allowedPathPrefixes": ["/admin/", "/tenant-b/admin/"],
+
+  "allowedActions": [
+    "click",
+    "type",
+    "select",
+    "set_checked",
+    "press_key",
+    "navigate",
+    "scroll_into_view",
+    "extract",
+    "dismiss_dialog"
+  ],
+
+  "maxStepsPerRun": 30,
+
+  "risk": {
+    "safe": "allow",
+    "mutating": "confirm",
+    "irreversible": "deny"
+  },
+
+  "denyPatterns": [
+    "/admin/signoff\\.do",
+    "/admin/logon\\.do"
+  ]
+}
