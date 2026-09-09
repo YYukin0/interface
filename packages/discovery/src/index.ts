@@ -13,11 +13,14 @@ export {
   AnthropicDecisionModel,
   ScriptedDecisionModel,
   DEFAULT_MODEL,
+  DEFAULT_TOOL_CHOICE,
   ENV,
+  parseToolChoice,
   type DecisionModel,
   type ModelReply,
   type ScriptedStep,
   type AnthropicModelOptions,
+  type ToolChoiceMode,
 } from './model.js';
 /** Re-exported for callers that build a discovery run; it lives in `@cua/evidence`. */
 export { EvidenceSink } from '@cua/evidence';

@@ -26,6 +26,10 @@ import {
   record,
   patternOf,
   LINE_BUDGET,
+  AnthropicDecisionModel,
+  DEFAULT_TOOL_CHOICE,
+  ENV,
+  parseToolChoice,
 } from '../dist/index.js';
 
 const node = (partial) => ({
@@ -346,5 +350,42 @@ describe('the turn prompt', () => {
     });
     assert.match(text, /type\(f2e6, \$\.inputs\.memberId\)/);
     assert.equal(text.includes('12345'), false);
+  });
+});
+
+/**
+ * Forced tool use is the design; `auto` exists because not every
+ * Anthropic-compatible endpoint will accept a required tool choice. Kimi's
+ * enables extended thinking unconditionally and rejects the combination, so
+ * without the escape hatch discovery there stops on `model_gave_up` at step 0.
+ */
+describe('how hard the model is pushed to call a tool', () => {
+  test('forced tool use is what you get when nobody says otherwise', () => {
+    assert.equal(DEFAULT_TOOL_CHOICE, 'any');
+    assert.equal(parseToolChoice(undefined), 'any');
+    assert.equal(parseToolChoice(''), 'any');
+  });
+
+  test('it can be relaxed, but only to a mode that exists', () => {
+    assert.equal(parseToolChoice('auto'), 'auto');
+    assert.equal(parseToolChoice('any'), 'any');
+    // A typo must not silently become forced tool use against an endpoint that
+    // refuses it — that failure would surface as an unexplained model_gave_up.
+    assert.throws(() => parseToolChoice('required'), /must be 'any' or 'auto'/);
+    assert.throws(() => parseToolChoice('none'), new RegExp(ENV.toolChoice));
+  });
+
+  test('fromEnv reads it, and still refuses to run without credentials', () => {
+    assert.equal(AnthropicDecisionModel.fromEnv({}), null);
+    const model = AnthropicDecisionModel.fromEnv({
+      [ENV.apiKey]: 'sk-not-a-real-key',
+      [ENV.model]: 'kimi-k2.7-code-highspeed',
+      [ENV.toolChoice]: 'auto',
+    });
+    assert.equal(model.id, 'kimi-k2.7-code-highspeed');
+    assert.throws(
+      () => AnthropicDecisionModel.fromEnv({ [ENV.apiKey]: 'sk-x', [ENV.toolChoice]: 'nonsense' }),
+      /must be 'any' or 'auto'/,
+    );
   });
 });

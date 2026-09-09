@@ -55,7 +55,9 @@ const USAGE = `usage: node scripts/discover.mjs <job.json> [options]
 environment
   ${ENV.apiKey}      model credentials; required unless --check
   ${ENV.baseUrl}     optional model endpoint override
-  ${ENV.model}         optional model id
+  ${ENV.model}        optional model id
+  ${ENV.toolChoice}  'any' (default, forced tool use) or 'auto', for
+                       endpoints that refuse a required tool choice
   CUA_APP_USERNAME     application operator id    (default: teller01)
   CUA_APP_PASSWORD     application password       (default: letmein)
   CUA_INPUT_<NAME>     value for an input declared with "valueFrom"

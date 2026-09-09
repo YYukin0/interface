@@ -53,25 +53,56 @@ export const ENV = {
   apiKey: 'CUA_LLM_API_KEY',
   baseUrl: 'CUA_LLM_BASE_URL',
   model: 'CUA_LLM_MODEL',
+  toolChoice: 'CUA_LLM_TOOL_CHOICE',
 } as const;
 
 export const DEFAULT_MODEL = 'claude-opus-5';
+
+/**
+ * Forced tool use is the default and the design; `auto` is an escape hatch for
+ * endpoints that will not accept it.
+ *
+ * Not every Anthropic-compatible endpoint is Claude. Kimi's, for one, enables
+ * extended thinking unconditionally — `thinking: {type:'disabled'}` is refused
+ * with "only type=enabled is allowed for this model" — and its API rejects
+ * thinking alongside a required tool choice. Forced tool use there is not a
+ * preference the caller can express; the request simply 400s, and discovery
+ * stops on `model_gave_up` before it has taken a single step.
+ *
+ * Relaxing to `auto` costs less than it looks like it should, because the loop
+ * already treats a prose reply as a recoverable turn: `decide` returns the
+ * "every turn must be exactly one tool call" feedback and the model gets
+ * another go, against the step budget. So `any` buys determinism-of-shape from
+ * a model that honours it, and `auto` buys a run at all from one that cannot.
+ */
+export type ToolChoiceMode = 'any' | 'auto';
+
+export const DEFAULT_TOOL_CHOICE: ToolChoiceMode = 'any';
+
+export function parseToolChoice(raw: string | undefined): ToolChoiceMode {
+  if (raw === undefined || raw === '') return DEFAULT_TOOL_CHOICE;
+  if (raw === 'any' || raw === 'auto') return raw;
+  throw new Error(`${ENV.toolChoice} must be 'any' or 'auto', not '${raw}'`);
+}
 
 export interface AnthropicModelOptions {
   readonly apiKey: string;
   readonly model?: string;
   readonly baseUrl?: string;
   readonly maxTokens?: number;
+  readonly toolChoice?: ToolChoiceMode;
 }
 
 export class AnthropicDecisionModel implements DecisionModel {
   readonly id: string;
   readonly #client: Anthropic;
   readonly #maxTokens: number;
+  readonly #toolChoice: ToolChoiceMode;
 
   constructor(options: AnthropicModelOptions) {
     this.id = options.model ?? DEFAULT_MODEL;
     this.#maxTokens = options.maxTokens ?? 1024;
+    this.#toolChoice = options.toolChoice ?? DEFAULT_TOOL_CHOICE;
     this.#client = new Anthropic({
       apiKey: options.apiKey,
       ...(options.baseUrl === undefined ? {} : { baseURL: options.baseUrl }),
@@ -88,6 +119,10 @@ export class AnthropicDecisionModel implements DecisionModel {
       apiKey,
       ...(model === undefined ? {} : { model }),
       ...(baseUrl === undefined ? {} : { baseUrl }),
+      // Throws on a typo rather than silently forcing tools at an endpoint that
+      // will reject the request: the failure would otherwise surface fourteen
+      // steps later as `model_gave_up`.
+      toolChoice: parseToolChoice(env[ENV.toolChoice]),
     });
   }
 
@@ -100,11 +135,12 @@ export class AnthropicDecisionModel implements DecisionModel {
         system,
         messages: [{ role: 'user', content: user }],
         tools: toolsWithRationale() as unknown as Anthropic.Tool[],
-        // Forced tool use, and temperature 0. Prose is not an action, and a turn
-        // spent explaining what it would like to do is a turn off the step
-        // budget. Determinism is not achievable here, but reducing the sampling
-        // variance makes a rerun of the same discovery meaningfully comparable.
-        tool_choice: { type: 'any' },
+        // Forced tool use by default, and temperature 0. Prose is not an action,
+        // and a turn spent explaining what it would like to do is a turn off the
+        // step budget. Determinism is not achievable here, but reducing the
+        // sampling variance makes a rerun of the same discovery meaningfully
+        // comparable. See `ToolChoiceMode` for when this has to relax to 'auto'.
+        tool_choice: { type: this.#toolChoice },
         temperature: 0,
       });
     } catch (cause) {
