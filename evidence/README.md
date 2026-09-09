@@ -15,6 +15,15 @@ snapshots/        redacted accessibility trees
 recording.jsonl   discovery only: the compiler's input (I5 — this is not the artifact)
 ```
 
+The **saved capability artifact** the brief asks for is
+[`capabilities/member.read_savings_balance.capability.json`](../capabilities), which
+was compiled from the first discovery run below and names it in
+`provenance.traceRef`. It lives outside `evidence/` on purpose: evidence is a
+record of what happened, and the artifact is a reviewed, human-editable file with
+its own lifecycle. The second discovery run's artifact is checked in beside its
+recording, unedited, so the compiler's raw output can be read next to the reviewed
+one.
+
 ## What is here and what each run demonstrates
 
 ### The real discovery run
