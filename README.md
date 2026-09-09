@@ -36,7 +36,6 @@ Honest state of the build, so nothing here reads as more finished than it is.
 Design write-up (the brief's seven headings): [REPORT.md](REPORT.md).
 Committed runs, and what each one demonstrates: [evidence/README.md](evidence/README.md).
 Design decisions and their rationale: [AGENTS.md](AGENTS.md) §2.
-Implementation plan and milestones: [PLAN.md](PLAN.md).
 
 ---
 

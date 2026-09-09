@@ -40,8 +40,10 @@ A **computer-use automation system** for back-office banking applications that e
 **The one sentence to keep in your head:**
 > The model discovers. The artifact is the reusable capability. Deterministic replay is how the AI agent invokes it in production.
 
-The full assignment brief is `Assignment A — Computer-Use Automation System.pdf`.
-The implementation plan is [PLAN.md](PLAN.md). Research notes and vendored reference clones are in `research/`.
+Three things live beside this repository rather than inside it, and are gitignored
+for the reasons in `.gitignore`: the assignment brief
+(`Assignment A — Computer-Use Automation System.pdf`), the working implementation
+plan (`PLAN.md`), and the reference clones and papers under `research/`.
 
 ---
 

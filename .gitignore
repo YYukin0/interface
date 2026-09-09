@@ -16,3 +16,8 @@ research/
 # repository is public — republishing somebody else's take-home prompt is their
 # call to make, not mine. Kept locally; referenced in README and REPORT instead.
 Assignment A — Computer-Use Automation System.pdf
+
+# The working implementation plan: my own scheduling notes, time-boxes and
+# scope-cut lists. It is how the thing got built, not part of the thing. The
+# design decisions worth reading were promoted into REPORT.md and AGENTS.md §2.
+PLAN.md
