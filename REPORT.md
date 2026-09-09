@@ -564,10 +564,24 @@ missing feature.
 
 **Stretch goals taken**
 
-The brief says pick at most one or two. Three are here, and they are grouped
-rather than counted separately because they are one idea — *an artifact you can
-trust unattended* — approached from three sides. None of them is a feature bolted
-on for credit; each closes a hole the core would otherwise have.
+The brief says pick at most one or two, and depth over breadth. Three appear in
+§8's list, which is worth accounting for rather than leaving to look like
+breadth-chasing.
+
+The third — cross-tenant reuse — is not really a stretch goal here. §3.7 is a
+core requirement and asks how an artifact would be represented so it can be
+reused across tenants running the same vendor product. Answering that in prose
+and then not running it seemed like the weaker version of the same work, so
+`--tenant tenant-b` executes the argument §4 makes. §8 happens to also list a
+demonstration of it.
+
+The other two are one mechanism seen twice: `.stability.json` accumulates
+runs/successes per capability version, and that same counter is both the
+stability signal and the evidence an approval decision would rest on. Neither is
+a feature bolted on for credit — together they are perhaps thirty lines, and each
+closes a hole the core would otherwise have: without them "reviewable artifact"
+means a human read it once and nothing enforced that, and "deterministic" stays
+an adjective instead of a number.
 
 - **Confidence & approval.** `capabilities/.stability.json` accumulates
   runs/successes per capability version, and `ReplayRequest.requireApproved`
