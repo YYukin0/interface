@@ -225,3 +225,8 @@ Start at [`packages/contracts/src/index.ts`](packages/contracts/src/index.ts), w
 ## A note on secrets
 
 Credentials come from the environment and are never written to an artifact, a log, or a prompt. The schema refuses to store a parameter classified `secret`, and refuses literals that look like account numbers, amounts, or credentials. `research/` is gitignored: it holds third-party clones under their own licences.
+
+## License
+
+[MIT](LICENSE). The reference clones under `research/` are not covered by it — they are not distributed here, and each carries its own licence.
+
