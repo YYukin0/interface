@@ -158,9 +158,9 @@ somewhere plausible. `scripts/drift.mjs` reproduces that against the real artifa
 the repair path is §5, a person, because a model repairing locators at replay time
 puts non-determinism back on the production path exactly when it matters most.
 
-Every arm is produced on demand by the fixture rather than described — six
-injectable faults reachable by member id, one per arm, run end to end in
-[README.md](README.md#demo-path) and committed under [`evidence/`](evidence):
+The fixture ships six faults injectable by member id, so every arm is produced on
+demand rather than described. An excerpt; the full matrix runs end to end in
+[README.md](README.md#demo-path) and is committed under [`evidence/`](evidence):
 
 | input | what the application does | result |
 |---|---|---|
