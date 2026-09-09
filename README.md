@@ -89,7 +89,7 @@ packages/contracts/examples/
     5 steps · 2 declared outcomes · approval=draft
     as a tool: readOnly=true destructive=false unattended=false
     outcomes: MEMBER_NOT_FOUND, PERMISSION_DENIED
-    tenant tenant-b: 2/5 steps overridden (drift 0.40)  ⚠ exceeds drift threshold
+    tenant tenant-b: 2/5 steps overridden (drift 0.40)  ⚠ exceeds drift threshold — consider re-recording
 
 capabilities/
 ✓ member.read_savings_balance.capability.json

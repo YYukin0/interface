@@ -17,6 +17,14 @@ research/
 # call to make, not mine. Kept locally; referenced in README and REPORT instead.
 Assignment A — Computer-Use Automation System.pdf
 
+# Evidence from demo runs. Following the README's demo path writes 24 run
+# directories, which turns `git status` into noise for anybody trying it. The
+# curated runs that evidence/README.md explains are already tracked, and git
+# never ignores a tracked file, so this only silences new ones. To keep a new
+# run as evidence, add it deliberately: `git add -f evidence/<run-id>`.
+evidence/*
+!evidence/README.md
+
 # The working implementation plan: my own scheduling notes, time-boxes and
 # scope-cut lists. It is how the thing got built, not part of the thing. The
 # design decisions worth reading were promoted into REPORT.md and AGENTS.md §2.
