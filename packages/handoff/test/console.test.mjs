@@ -61,6 +61,39 @@ function fakeLiveView() {
   };
 }
 
+/**
+ * Reads an `/api/frames` response as a sequence of SSE `data:` events.
+ *
+ * The naive version of this — one `reader.read()` per event — works until it
+ * doesn't. The server writes its ": connected" preamble and any replayed frame
+ * back to back with nothing awaited between them, so whether those arrive as
+ * one TCP segment or two is the kernel's decision, and it differs by platform.
+ * A test that guesses passes on macOS and hangs on Linux CI until the socket
+ * times out. Buffer, and yield events rather than chunks — which is what the
+ * console's own `EventSource` has always done.
+ */
+function sse(response) {
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffered = '';
+
+  return {
+    async next() {
+      for (;;) {
+        const match = buffered.match(/^data: (.*)$/m);
+        if (match !== null) {
+          buffered = buffered.slice(match.index + match[0].length);
+          return JSON.parse(match[1]);
+        }
+        const { value, done } = await reader.read();
+        assert.ok(!done, 'the stream closed before the expected event arrived');
+        buffered += decoder.decode(value, { stream: true });
+      }
+    },
+    close: () => reader.cancel(),
+  };
+}
+
 before(async () => {
   evidenceRoot = await mkdtemp(join(tmpdir(), 'cua-handoff-'));
   liveView = fakeLiveView();
@@ -240,16 +273,11 @@ describe('control transfer', () => {
     const response = await fetch(url('/api/frames'));
     assert.equal(response.headers.get('content-type'), 'text/event-stream');
 
-    const reader = response.body.getReader();
-    await reader.read(); // the ": connected" preamble
-
+    const stream = sse(response);
     liveView.push({ data: 'AAAA', format: 'jpeg', width: 1280, height: 800 });
-    const { value } = await reader.read();
-    const text = new TextDecoder().decode(value);
-    assert.match(text, /^data: /);
-    assert.equal(JSON.parse(text.slice(6)).data, 'AAAA');
+    assert.equal((await stream.next()).data, 'AAAA');
 
-    await reader.cancel();
+    await stream.close();
   });
 
   test('a console that reconnects is shown the screen it missed', async () => {
@@ -258,24 +286,10 @@ describe('control transfer', () => {
     // the replayed frame an operator who reloads gets a correct, connected,
     // permanently blank rectangle — which reads as a broken tool. Found by
     // reloading the page during the end-to-end run, not by reasoning about it.
-    const response = await fetch(url('/api/frames'));
-    const reader = response.body.getReader();
+    const stream = sse(await fetch(url('/api/frames')));
+    assert.equal((await stream.next()).data, 'AAAA', 'the last frame should be replayed');
 
-    // The server writes ": connected" and the replayed frame back to back, so
-    // whether they arrive as one chunk or two is up to the kernel, not up to us
-    // — and it differs between macOS and Linux. Read until the stream has
-    // yielded a `data:` event rather than assuming one read is one event.
-    const decoder = new TextDecoder();
-    let buffered = '';
-    let frame;
-    while ((frame = buffered.match(/^data: (.*)$/m)) === null) {
-      const { value, done } = await reader.read();
-      assert.ok(!done, 'the stream closed before replaying a frame');
-      buffered += decoder.decode(value, { stream: true });
-    }
-    assert.equal(JSON.parse(frame[1]).data, 'AAAA', 'the last frame should be replayed');
-
-    await reader.cancel();
+    await stream.close();
   });
 });
 
