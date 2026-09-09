@@ -1,5 +1,9 @@
 # Computer-Use Automation System
 
+[![CI](https://github.com/YYukin0/interface/actions/workflows/ci.yml/badge.svg)](https://github.com/YYukin0/interface/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%E2%89%A522-brightgreen.svg)](package.json)
+
 An AI agent decides *what* to do. This is how it reliably and safely *does* it, inside legacy bank software that offers no other way in.
 
 ```
