@@ -562,6 +562,28 @@ Stated because the failure modes matter more than the feature list:
 Every deliberate omission, with the reason. An undocumented stub is worse than a
 missing feature.
 
+**Stretch goals taken**
+
+The brief says pick at most one or two. Three are here, and they are grouped
+rather than counted separately because they are one idea — *an artifact you can
+trust unattended* — approached from three sides. None of them is a feature bolted
+on for credit; each closes a hole the core would otherwise have.
+
+- **Confidence & approval.** `capabilities/.stability.json` accumulates
+  runs/successes per capability version, and `ReplayRequest.requireApproved`
+  gates unattended invocation on `draft → approved`. The CLI defaults it *off*
+  because its caller is a person testing before approving; `--as-agent` restores
+  the agent's rules and shows the refusal (`POLICY_DENIED`, no run directory).
+  Without this, "reviewable artifact" means a human read it once and nothing
+  enforced that.
+- **Multi-run stability.** `--repeat N` reports the number of distinct result
+  digests across N runs. Five runs, one digest, is the determinism claim stated
+  as a measurement rather than as an adjective. It shares the counters above.
+- **Cross-tenant reuse.** One artifact, a sparse per-tenant override, and a
+  second deployment of the same vendor product: `--tenant tenant-b` against the
+  checked-in capability, evidenced. This is §4's argument executed rather than
+  described, which is the difference between a design story and a claim.
+
 **Not built, by design**
 
 - **Desktop `SurfaceDriver`.** The seam is real and the contracts are free of
@@ -595,11 +617,24 @@ missing feature.
 
 - **The operator console UI.** One HTML file, one CSS file, one script, no
   framework. The brief permits mocking it; the mechanism underneath is not
-  mocked. Three real bugs in it were found by using it and fixed — hidden
-  controls that CSS was un-hiding, a five-second poll that blanked the canvas by
-  reassigning `canvas.width`, and a reconnecting console that got a permanently
-  blank rectangle because a 2003 frameset never repaints. That last one is
-  covered by a test now.
+  mocked. Five real bugs in it were found by *using* it, which is the argument
+  for having built it rather than stubbed it — hidden controls that CSS was
+  un-hiding, a five-second poll that blanked the canvas by reassigning
+  `canvas.width`, an operator locked out of their own session by pressing F5, a
+  reconnecting console that got a permanently blank rectangle because a 2003
+  frameset never repaints, and a lease badge that went on claiming the operator
+  held a session they had already handed back. The last two are covered by
+  tests.
+
+  The sixth was not cosmetic and was not in the console: `POST /api/input`
+  checked that *an* operator held the lease, never *which* one. The console URL
+  is a bearer credential and gets forwarded, so a second person with the link
+  could type into a session they had not claimed — and their inputs were filed
+  under the holder's name in the audit trail. The lease's whole claim is that
+  control has one holder; an input path that asks only whether somebody holds it
+  assumes that claim instead of enforcing it. Fixed, with two regression tests.
+  It is the clearest example of the general hazard in this design: the state
+  machine is only as real as its least careful entry point.
 - **The audit record keeps every mouse move.** 423 of the 440 recorded events in
   the committed takeover are `mousemove`. They are coalesced to one per animation
   frame already; dropping or sampling them would make the record readable at the
