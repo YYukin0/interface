@@ -134,6 +134,8 @@ export async function startOperatorConsole(
 
       case 'POST /api/input': {
         const lease = await coordinator.lease(claim.sessionId);
+        const body = await json(req);
+
         if (lease.holder !== 'operator') {
           // Refused, and said out loud. "Somebody tried to type into a session
           // they did not hold" is a more interesting line than the input would
@@ -149,7 +151,33 @@ export async function startOperatorConsole(
             lease,
           });
         }
-        return dispatch(res, claim.interventionId, await json(req));
+
+        // Which operator, not merely whether one exists.
+        //
+        // The console URL is a bearer credential and can be forwarded, so two
+        // people can have this page open. Checking only `holder === 'operator'`
+        // let the one who did *not* claim the lease type into the session
+        // anyway — and their inputs were filed under the holder's name in the
+        // audit trail, which is the part that makes it worth fixing rather than
+        // documenting. The lease's claim is that control has one holder; an
+        // input path that asks only whether *somebody* holds it does not
+        // enforce that claim, it assumes it.
+        //
+        // The client already compared these and called it "a courtesy rather
+        // than a control" because the server is authoritative. It was not.
+        const from = typeof body['operatorId'] === 'string' ? body['operatorId'] : null;
+        if (from !== lease.holderId) {
+          process.stderr.write(
+            `handoff: refused input on ${claim.sessionId} from ${from ?? '(anonymous)'}; ` +
+              `lease held by ${lease.holderId}\n`,
+          );
+          return send(res, 409, {
+            error: `this session is held by ${lease.holderId}`,
+            lease,
+          });
+        }
+
+        return dispatch(res, claim.interventionId, body);
       }
 
       case 'POST /api/handback': {

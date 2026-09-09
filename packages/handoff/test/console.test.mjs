@@ -179,6 +179,7 @@ describe('control transfer', () => {
     const accepted = await post('/api/input', {
       kind: 'pointer',
       event: { type: 'down', x: 0.25, y: 0.5, button: 'left', clickCount: 1 },
+      operatorId: 'operator-1',
     });
     assert.equal(accepted.status, 204);
     assert.deepEqual(liveView.pointers.at(-1), {
@@ -188,6 +189,35 @@ describe('control transfer', () => {
       button: 'left',
       clickCount: 1,
     });
+  });
+
+  test('a second person with the same link cannot type into a session they did not claim', async () => {
+    // The console URL is a bearer credential and gets forwarded — to a
+    // colleague, into a ticket. Checking only that *somebody* holds the lease
+    // let whoever did not claim it act anyway, and filed their inputs under the
+    // holder's name. One holder is what the lease promises; this is the input
+    // path keeping that promise rather than assuming it.
+    const before = liveView.pointers.length;
+
+    const refused = await post('/api/input', {
+      kind: 'pointer',
+      event: { type: 'down', x: 0.9, y: 0.9, button: 'left', clickCount: 1 },
+      operatorId: 'operator-2',
+    });
+
+    assert.equal(refused.status, 409);
+    assert.match((await refused.json()).error, /held by operator-1/);
+    assert.equal(liveView.pointers.length, before, 'a refused input reached the surface anyway');
+  });
+
+  test('an input that names nobody is refused too', async () => {
+    const before = liveView.pointers.length;
+    const refused = await post('/api/input', {
+      kind: 'pointer',
+      event: { type: 'down', x: 0.9, y: 0.9, button: 'left', clickCount: 1 },
+    });
+    assert.equal(refused.status, 409);
+    assert.equal(liveView.pointers.length, before);
   });
 
   test('coordinates cross the wire normalised, not as pixels', () => {
@@ -245,7 +275,7 @@ describe('what the human did, as evidence', () => {
     // An operator taking over a stuck sign-on types a password. This is exactly
     // the sink I3 exists for: we record THAT they typed into a field.
     for (const key of ['h', 'u', 'n', 't', 'e', 'r', '2']) {
-      assert.equal((await post('/api/input', { kind: 'key', event: { type: 'down', key } })).status, 204);
+      assert.equal((await post('/api/input', { kind: 'key', event: { type: 'down', key }, operatorId: 'operator-1' })).status, 204);
     }
     assert.equal(liveView.keys.length, 7, 'the keys should still reach the session');
 

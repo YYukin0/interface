@@ -135,7 +135,13 @@ async function post(path, body) {
   return payload;
 }
 
-const send = (kind, event) => (holdsIt() ? post('/api/input', { kind, event }) : null);
+// `operatorId` travels with every input because the server checks it against
+// the lease holder. It is not authentication — the console URL is the
+// credential, and anyone holding it could send any id — but it is what makes a
+// second person with the same link unable to type into a session they did not
+// claim without deliberately impersonating the person who did.
+const send = (kind, event) =>
+  holdsIt() ? post('/api/input', { kind, event, operatorId }) : null;
 
 /** Canvas pixels → [0,1], via the canvas's own on-screen size. */
 function normalise(ev) {
