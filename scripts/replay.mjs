@@ -144,6 +144,8 @@ const main = async () => {
     origin: entry.origin,
     sink,
     evidenceRoot: argv.evidence,
+    onEvent: progress,
+    onWaiting: waiting,
     sessionProbe: SESSION_PROBE,
     // Re-enters credentials on the SAME live session (I7's little sibling):
     // `signIn` drives the existing page rather than opening a new context.
@@ -262,6 +264,76 @@ async function waitForHandBack(coordinator, sessionId) {
     if (lease.holder === 'automation') return 'resume';
     if (lease.holder === 'none' && lease.reason?.includes('run is over')) return 'stop';
     await new Promise((r) => setTimeout(r, 500));
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Progress
+// -----------------------------------------------------------------------------
+
+/**
+ * One line per interesting event, while the run is still happening.
+ *
+ * The run that made this necessary takes twenty-one seconds and prints nothing
+ * for twenty of them: member 66666 is bounced back to sign-on, the engine
+ * re-authenticates once, and then waits out the checkpoint's budget before it is
+ * willing to say the session is unrecoverable. That wait is the correct
+ * behaviour — the conclusion is reached by looking rather than by guessing — but
+ * a silent terminal makes correct-and-slow look identical to hung, and the first
+ * person to run it hit ctrl-c, which is the right response to what they could
+ * see.
+ *
+ * What arrives here has already been redacted and schema-checked by the writer,
+ * so this function has no filtering to do beyond deciding what is worth a line.
+ * Most events are not: `observed` fires constantly and says nothing a human
+ * wants at this level. The ones kept are the ones that explain a pause.
+ */
+function progress(event) {
+  const line = describe(event);
+  if (line !== null) process.stderr.write(`  ${line}\n`);
+}
+
+/** Said while a wait is happening, which is the whole point of it. */
+function waiting({ stepId, checkpointId, waitedMs, budgetMs }) {
+  process.stderr.write(
+    `  ${stepId}: still waiting on ${checkpointId} — ` +
+      `${(waitedMs / 1000).toFixed(0)}s of ${(budgetMs / 1000).toFixed(0)}s\n`,
+  );
+}
+
+function describe(event) {
+  switch (event.event) {
+    case 'resolved':
+      return event.status === 'unique'
+        ? null // The expected case. Only say something when it is not.
+        : `${event.stepId ?? '—'}: locator ${event.status}` +
+            ` (agreement ${event.agreement.toFixed(2)})`;
+
+    case 'checkpoint_evaluated':
+      // Only the ones that cost time. A checkpoint that passed instantly is the
+      // system working, and narrating it buries the ones that did not.
+      return event.passed && event.waitedMs < 1000
+        ? null
+        : `checkpoint ${event.checkpointId}: ${event.passed ? 'passed' : 'not met'}` +
+            ` after ${(event.waitedMs / 1000).toFixed(1)}s — expected ${event.expected}`;
+
+    case 'recovery_attempted':
+      return (
+        `recovering ${event.stepId ?? '—'}: ${event.condition} → ${event.took}` +
+        ` (attempt ${event.attempt}, ${event.succeeded ? 'worked' : 'did not help'})`
+      );
+
+    case 'business_outcome':
+      return `outcome ${event.code} declared by the artifact`;
+
+    case 'escalated':
+      return `escalating: ${event.reason}`;
+
+    case 'control_transferred':
+      return `control ${event.from} → ${event.to}: ${event.reason}`;
+
+    default:
+      return null;
   }
 }
 

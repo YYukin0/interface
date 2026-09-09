@@ -101,6 +101,16 @@ import { FileCapabilityStore } from './store.js';
 const POLL_MS = 250;
 
 /**
+ * How often a wait in progress tells anyone watching that it is still going.
+ *
+ * Five seconds is chosen against a person's patience rather than against
+ * anything technical: it is short enough that a twenty-second wait produces a
+ * few lines instead of one silence, and long enough that a normal run — where
+ * every checkpoint settles in well under a second — produces none at all.
+ */
+const WAIT_HEARTBEAT_MS = 5000;
+
+/**
  * A checkpoint timeout meaning "evaluate once and answer".
  *
  * The schema requires a positive integer, so this is the smallest legal way to
@@ -161,6 +171,43 @@ export interface ReplayEngineOptions {
   readonly sink?: EvidenceSink;
   readonly evidenceRoot?: string;
   readonly redactor?: DefaultRedactor;
+  /**
+   * Passed straight to the evidence writer, so a caller can watch a run happen
+   * instead of reading it afterwards. See `FileEvidenceOptions.onEvent` for why
+   * the hook is there and not here: what it hands out has already been redacted.
+   *
+   * The engine has no opinion about what a watcher does with these. It exists
+   * because the recovery path can spend twenty seconds waiting out a checkpoint
+   * budget, and a run that prints nothing for twenty seconds is indistinguishable
+   * from a hung one — a CLI that gets interrupted by an operator who reasonably
+   * concluded it had died is not reporting its progress.
+   */
+  readonly onEvent?: (event: TraceEvent) => void;
+
+  /**
+   * Called periodically while `#settle` is waiting on a checkpoint.
+   *
+   * `onEvent` cannot cover this and it is worth being precise about why: trace
+   * events are written when something has *happened*, and waiting is the
+   * absence of that. A twenty-second wait produces exactly one
+   * `checkpoint_evaluated` event, emitted at the end, so a watcher subscribed
+   * to the trace learns about the wait only once it is over — which is the
+   * silence this is here to break, not to describe afterwards.
+   *
+   * It is deliberately not a trace event. Recording a heartbeat every 250ms
+   * would put hundreds of rows into `trace.jsonl` that say nothing except that
+   * time passed, and evidence is worth more when it is only what happened.
+   *
+   * Safe to hand out unscrubbed for the reason a `RedactionRecord` is: two ids
+   * and two durations have nowhere to put a member's name or balance. Anything
+   * observed from the screen goes through the writer.
+   */
+  readonly onWaiting?: (waiting: {
+    readonly stepId: string;
+    readonly checkpointId: string;
+    readonly waitedMs: number;
+    readonly budgetMs: number;
+  }) => void;
   readonly principalId?: string;
   /**
    * Detects that the application has bounced us back to sign-on.
@@ -268,7 +315,11 @@ export class DeterministicReplayEngine implements ReplayEngine {
         schemaVersion: SCHEMA_VERSION,
         gitSha: null,
       },
-      { root: this.#o.evidenceRoot ?? 'evidence', redactor },
+      {
+        root: this.#o.evidenceRoot ?? 'evidence',
+        redactor,
+        ...(this.#o.onEvent === undefined ? {} : { onEvent: this.#o.onEvent }),
+      },
     );
 
     sink.bind(writer);
@@ -776,6 +827,7 @@ class Run {
     const budget = step.checkpoint?.timeoutMs ?? 0;
     const started = this.#now().getTime();
     let last: AssertionResult | null = null;
+    let announced = 0;
 
     for (;;) {
       const dialog = await this.#dialogMessage();
@@ -793,6 +845,18 @@ class Run {
       if (waited >= budget) {
         last = { ...last, waitedMs: waited };
         break;
+      }
+
+      // Every WAIT_HEARTBEAT_MS of an ongoing wait, not every poll: the poll is
+      // four times a second and nobody needs to be told that four times a second.
+      if (step.checkpoint !== null && waited - announced >= WAIT_HEARTBEAT_MS) {
+        announced = waited;
+        this.#o.onWaiting?.({
+          stepId: step.id,
+          checkpointId: step.checkpoint.id,
+          waitedMs: waited,
+          budgetMs: budget,
+        });
       }
 
       await this.#pause(POLL_MS);

@@ -136,6 +136,60 @@ describe('redaction on the way to disk (I3)', () => {
     assert.ok(typeof manifest.target === 'string');
   });
 
+  test('a subscriber watching the run sees the scrubbed event, not the original', async () => {
+    // The reason `onEvent` is on the writer rather than on the engine. A hook
+    // upstream of the redactor would hand a live credential to whatever is
+    // watching — here, a CLI that prints it to a terminal and very likely into
+    // somebody's CI log. Being downstream is what makes that unrepresentable.
+    const seen = [];
+    const writer = await FileEvidenceWriter.open(manifestFor(runId), {
+      root,
+      onEvent: (event) => seen.push(event),
+    });
+
+    await writer.append({
+      event: 'recovery_attempted',
+      at: '2026-09-09T10:00:01.000Z',
+      stepId: 's1',
+      condition: 'retrying after CUA_APP_PASSWORD=hunter2xyz was rejected',
+      took: 'reauthenticate',
+      attempt: 1,
+      succeeded: true,
+    });
+
+    const json = JSON.stringify(seen);
+    assert.ok(!json.includes('hunter2xyz'), 'a watcher must not be handed the credential');
+    assert.match(json, /\[REDACTED:CREDENTIAL\]/);
+
+    // And it is the same object the file got, so a watcher and a reader of the
+    // evidence cannot come away with different accounts of the same run.
+    const recoveries = seen.filter((e) => e.event === 'recovery_attempted');
+    assert.equal(recoveries.length, 1);
+    assert.ok((await traceText(writer)).includes(JSON.stringify(recoveries[0])));
+
+    // The detection is announced too, so a watcher learns redaction happened
+    // rather than silently receiving less than it asked for.
+    assert.ok(seen.some((e) => e.event === 'redacted'));
+  });
+
+  test('a subscriber that throws cannot break the run it is watching', async () => {
+    const writer = await FileEvidenceWriter.open(manifestFor(runId), {
+      root,
+      onEvent: () => {
+        throw new Error('the console this was printing to went away');
+      },
+    });
+
+    await writer.append({
+      event: 'business_outcome',
+      at: '2026-09-09T10:00:02.000Z',
+      code: 'MEMBER_NOT_FOUND',
+      message: 'no such member',
+    });
+
+    assert.match(await traceText(writer), /MEMBER_NOT_FOUND/);
+  });
+
   test('a scrubbed event still satisfies the trace schema', async () => {
     const writer = await open();
 

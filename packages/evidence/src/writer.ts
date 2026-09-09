@@ -44,6 +44,22 @@ export interface FileEvidenceOptions {
   /** Root under which run directories are created. Defaults to `evidence/`. */
   readonly root?: string;
   readonly redactor?: DefaultRedactor;
+
+  /**
+   * Called with each event as it is appended, for anyone who wants to watch a
+   * run rather than read it afterwards.
+   *
+   * It is deliberately here and not on the engine. What arrives has already
+   * been through the redactor and already satisfied the trace schema — it is
+   * the same object that reaches `trace.jsonl`, so a subscriber cannot print
+   * something the evidence file would not have contained. An `onEvent` hanging
+   * off the engine would hand out the unscrubbed original and make I3 a matter
+   * of every caller's discipline, which is not where that invariant belongs.
+   *
+   * Synchronous and unawaited on purpose: a slow or throwing subscriber must
+   * not be able to delay or fail the write. Exceptions are swallowed.
+   */
+  readonly onEvent?: (event: TraceEvent) => void;
 }
 
 export class FileEvidenceWriter implements EvidenceWriter {
@@ -51,14 +67,30 @@ export class FileEvidenceWriter implements EvidenceWriter {
   readonly dir: string;
   readonly #redactor: DefaultRedactor;
   readonly #tracePath: string;
+  readonly #onEvent: (event: TraceEvent) => void;
   #redactions: RedactionRecord[] = [];
   #opened = false;
 
-  private constructor(runId: string, dir: string, redactor: DefaultRedactor) {
+  private constructor(
+    runId: string,
+    dir: string,
+    redactor: DefaultRedactor,
+    onEvent: (event: TraceEvent) => void,
+  ) {
     this.runId = runId;
     this.dir = dir;
     this.#redactor = redactor;
+    this.#onEvent = onEvent;
     this.#tracePath = join(dir, 'trace.jsonl');
+  }
+
+  /** A subscriber's problem is a subscriber's problem, not the run's. */
+  #announce(event: TraceEvent): void {
+    try {
+      this.#onEvent(event);
+    } catch {
+      /* ignored: watching a run must not be able to break recording it */
+    }
   }
 
   static async open(
@@ -74,6 +106,7 @@ export class FileEvidenceWriter implements EvidenceWriter {
       manifest.runId,
       dir,
       options.redactor ?? new DefaultRedactor(),
+      options.onEvent ?? (() => undefined),
     );
     await writeFile(join(dir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
     await writer.append({ event: 'run_started', at: manifest.startedAt, manifest });
@@ -99,6 +132,7 @@ export class FileEvidenceWriter implements EvidenceWriter {
     // mode where evidence silently stops being machine-readable.
     const parsed = traceEvent.parse(value);
     await appendFile(this.#tracePath, JSON.stringify(parsed) + '\n', 'utf8');
+    this.#announce(parsed);
 
     if (found.length === 0) return;
 
@@ -116,6 +150,7 @@ export class FileEvidenceWriter implements EvidenceWriter {
     for (const record of records) {
       const event = traceEvent.parse({ event: 'redacted', at: nowIso(), record });
       await appendFile(this.#tracePath, JSON.stringify(event) + '\n', 'utf8');
+      this.#announce(event);
     }
   }
 
@@ -138,6 +173,7 @@ export class FileEvidenceWriter implements EvidenceWriter {
     for (const record of records) {
       const event = traceEvent.parse({ event: 'redacted', at: nowIso(), record });
       await appendFile(this.#tracePath, JSON.stringify(event) + '\n', 'utf8');
+      this.#announce(event);
     }
   }
 
